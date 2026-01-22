@@ -32,7 +32,7 @@ CYAN=$(echo -en '\001\033[00;36m\002')
 function print_header() {
     clear
     echo ""
-    echo -e "${YELLOW}     Welcome to the Debian 12 System installer!${NC}"
+    echo -e "${YELLOW}     Welcome to the Debian 13 System installer!${NC}"
     echo -e "${GREEN}"
     echo "     I need to ask you a few questions before starting the setup."
     echo ""
@@ -41,7 +41,7 @@ function print_header() {
 function print_conf() {
     clear
     echo ""
-    echo -e "${YELLOW}     Debian 12 System installer${NC}"
+    echo -e "${YELLOW}     Debian 13 System installer${NC}"
     echo -e "${GREEN}"
     echo "     Your input is:"
     echo ""
@@ -50,13 +50,13 @@ function print_conf() {
 function pre_inst_ssh() {
 
     cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/bashrc.ini
+    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/bashrc.ini
 
     cp bashrc.ini /root/.bashrc
     cp bashrc.ini /etc/skel/.bashrc
     rm /root/bashrc.ini
 
-    echo "deb http://deb.debian.org/debian/ bookworm-backports main" | tee -a /etc/apt/sources.list
+    #echo "deb http://deb.debian.org/debian/ bookworm-backports main" | tee -a /etc/apt/sources.list
 
     ###################################
     #### enable mouse support for nano
