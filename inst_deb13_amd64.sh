@@ -32,7 +32,7 @@ CYAN=$(echo -en '\001\033[00;36m\002')
 function print_header() {
     clear
     echo ""
-    echo -e "${YELLOW}     Welcome to the Debian 12 System installer!${NC}"
+    echo -e "${YELLOW}     Welcome to the Debian 13 System installer!${NC}"
     echo -e "${GREEN}"
     echo "     I need to ask you a few questions before starting the setup."
     echo ""
@@ -41,7 +41,7 @@ function print_header() {
 function print_conf() {
     clear
     echo ""
-    echo -e "${YELLOW}     Debian 12 System installer${NC}"
+    echo -e "${YELLOW}     Debian 13 System installer${NC}"
     echo -e "${GREEN}"
     echo "     Your input is:"
     echo ""
@@ -50,13 +50,13 @@ function print_conf() {
 function pre_inst_ssh() {
 
     cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/bashrc.ini
+    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/bashrc.ini
 
     cp bashrc.ini /root/.bashrc
     cp bashrc.ini /etc/skel/.bashrc
     rm /root/bashrc.ini
 
-    echo "deb http://deb.debian.org/debian/ bookworm-backports main" | tee -a /etc/apt/sources.list
+    #echo "deb http://deb.debian.org/debian/ bookworm-backports main" | tee -a /etc/apt/sources.list
 
     ###################################
     #### enable mouse support for nano
@@ -112,11 +112,23 @@ function pre_inst_ssh() {
     #### Restrict supported key exchange, cipher, and MAC algorithms
     echo -e "# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\n\nKexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,gss-curve25519-sha256-,diffie-hellman-group16-sha512,gss-group16-sha512-,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256\n\nCiphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\n\nMACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com\n\nHostKeyAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nRequiredRSASize 3072\n\nCASignatureAlgorithms sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nGSSAPIKexAlgorithms gss-curve25519-sha256-,gss-group16-sha512-\n\nHostbasedAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-256\n\nPubkeyAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-256\n\n" >/etc/ssh/sshd_config.d/ssh-audit_hardening.conf
 
-    sed -i "s|\#Port 22|Port 49153|g" /etc/ssh/sshd_config
-    sed -i "s|\#LoginGraceTime 2m|LoginGraceTime 1m|g" /etc/ssh/sshd_config
-    sed -i "s|PermitRootLogin without-password|PermitRootLogin prohibit-password|g" /etc/ssh/sshd_config
-    sed -i "s|\#MaxAuthTries 6|MaxAuthTries 4|g" /etc/ssh/sshd_config
-    sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
+    #sed -i "s|\#Port 22|Port 49153|g" /etc/ssh/sshd_config
+    #sed -i "s|\#LoginGraceTime 2m|LoginGraceTime 1m|g" /etc/ssh/sshd_config
+    #sed -i "s|PermitRootLogin without-password|PermitRootLogin prohibit-password|g" /etc/ssh/sshd_config
+    #sed -i "s|\#MaxAuthTries 6|MaxAuthTries 4|g" /etc/ssh/sshd_config
+    #sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
+
+    cat >>/etc/ssh/sshd_config/sshd_hardening.conf<<'EOF'
+Port 49153
+LoginGraceTime 1m
+PermitRootLogin prohibit-password
+MaxAuthTries 4
+AllowTcpForwarding no
+X11Forwarding no
+AllowAgentForwarding no
+
+EOF
+
     sed -i "s|session    required     pam_env.so user_readenv=1 envfile=/etc/default/locale|session    required     pam_env.so envfile=/etc/default/locale|g" /etc/pam.d/sshd
     systemctl restart sshd
     sleep 5
@@ -160,7 +172,7 @@ function inst_logo_styles() {
 
     cat >>/root/inst_logo_styles.sh <<'EOF'
 
-wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/logostyle.zip
+wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/logostyle.zip
 unzip logostyle.zip
 cp logo.png /etc/webmin/authentic-theme/
 cp logo_welcome.png /etc/webmin/authentic-theme/
@@ -171,7 +183,7 @@ rm styles.css
 rm logostyle.zip
 
 cd //home/._default_hostname/public_html/ || exit
-wget -O index.html https://raw.githubusercontent.com/fdmgit/install-debian-12/main/index_web.php
+wget -O index.html https://raw.githubusercontent.com/fdmgit/install-debian-13/main/index_web.php
 sed  -i  "s|<?php echo \$_SERVER\['HTTP_HOST'\]; ?>|$(hostname)|g" index.html
 chown _default_hostname:_default_hostname index.html
 rm index.php
@@ -279,11 +291,11 @@ function inst_f2b() {
 
     apt -y install python3-systemd
 
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/jail-deb12.local
+    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/jail-deb13.local
     cd /etc/fail2ban || exit
     mv jail.local jail.local.orig
-    cp /root/jail-deb12.local jail.local
-    rm /root/jail-deb12.local
+    cp /root/jail-deb13.local jail.local
+    rm /root/jail-deb13.local
     
     cat >>/etc/fail2ban/fail2ban.local <<'EOF'
 
@@ -303,9 +315,9 @@ function inst_firewalld_ipset() {
 
     systemctl stop firewalld
     cd /root
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/ipsetgen.sh
+    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/ipsetgen.sh
     chmod +x ipsetgen.sh
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/ipsetinst.sh
+    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/ipsetinst.sh
     chmod +x ipsetinst.sh
 
     source ./ipsetgen.sh
@@ -378,7 +390,7 @@ function inst_kernel() {
     #### Install new Linux Kernel
     ##############################
 
-    apt install linux-image-6.12.30+bpo-amd64 -y
+    # apt install linux-image-6.12.30+bpo-amd64 -y
     # apt install linux-headers-6.12.12+bpo-amd64 -y # development
 
 }
@@ -869,13 +881,14 @@ function inst_virtualmin() {
 
 
     ##### testing
-    wget -O virtualmin-install.sh https://raw.githubusercontent.com/virtualmin/virtualmin-install/master/virtualmin-install.sh
+    #wget -O virtualmin-install.sh https://raw.githubusercontent.com/virtualmin/virtualmin-install/master/virtualmin-install.sh
     #yes | sh virtualmin-install.sh --type mini  --branch prerelease #  < full | mini >
-    yes | sh virtualmin-install.sh --type mini  --branch rc #  < full | mini >    
+    #yes | sh virtualmin-install.sh --type mini  --branch rc #  < full | mini >    
+    
     ##### production
-    #wget -O virtualmin-install.sh https://software.virtualmin.com/gpl/scripts/virtualmin-install.sh
-    #yes | sh virtualmin-install.sh --minimal  #  < full | mini >
-    #sh virtualmin-install.sh  -y
+    wget -O virtualmin-install.sh https://download.virtualmin.com/gpl/scripts/virtualmin-install.sh
+    yes | sh virtualmin-install.sh --mini   #  < full | mini >
+    sh virtualmin-install.sh  -y
     apt install fail2ban -y
     virtualmin-config-system -i=Fail2banFirewalld
     rm virtualmin-install.sh
@@ -915,11 +928,12 @@ function inst_jos() {
 function inst_base() {
 
     ###################################
-    #### Install Debian 12 Base
+    #### Install Debian 13 Base
     ###################################
     apt update
     apt upgrade -y
-    apt install plocate sntp ntpdate software-properties-common curl imagemagick -y
+    #apt install plocate sntp ntpdate software-properties-common curl imagemagick -y
+    apt install plocate curl imagemagick -y
     timedatectl set-timezone Europe/Zurich
 
     hostnamectl set-hostname "$fqdn"  # set hostname
@@ -1048,7 +1062,7 @@ function inst_motd() {
     cd /root || exit
     echo "" >/etc/motd
     apt install figlet -y
-    apt install boxes -y
+    #apt install boxes -y
     apt install lolcat -y
     cp /usr/games/lolcat /usr/local/bin/
 
@@ -1065,7 +1079,8 @@ echo ""
 EOF
 
     chmod +x /etc/update-motd.d/10-header
-
+    mv /etc/update-motd.d/10-uname /etc/update-motd.d/20-uname
+    sed -i "s|uname -snrvm|uname -snv|g" /etc/update-motd.d/20-uname    
 }
 
 function inst_hstr() {
