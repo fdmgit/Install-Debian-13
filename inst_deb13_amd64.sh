@@ -247,7 +247,7 @@ function inst_virtualmin_config() {
     ###################################
 
     cd /etc/webmin/virtual-server/plans || exit
-    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/160880314564582
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/1769190256443380
     cd /etc/webmin/virtual-server/templates || exit
     wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/server-level.tar.gz
     tar -xvzf server-level.tar.gz
