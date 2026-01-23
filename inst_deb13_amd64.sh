@@ -804,6 +804,74 @@ EOF
 
 }
 
+function inst_php85() {
+
+
+    apt-get install php8.5-{bcmath,bz2,cgi,curl,dba,fpm,gd,gmp,igbinary,imagick,imap,intl,ldap,mbstring} -y
+    apt-get install php8.5-{mysql,odbc,opcache,pspell,readline,redis,soap,sqlite3,tidy,xml,xmlrpc,xsl,zip} -y
+
+    cat >>/etc/php/8.5/cgi/php.ini <<'EOF'
+
+[PHP]
+output_buffering = Off
+max_execution_time = 300
+max_input_time = 300
+memory_limit = 512M
+post_max_size = 1024M
+upload_max_filesize = 1024M
+date.timezone = Europe/Zurich
+max_input_vars = 10000
+[Session]
+session.gc_maxlifetime = 3600     
+[opcache]
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=256M
+
+EOF
+
+    cat >>/etc/php/8.5/cli/php.ini <<'EOF'
+
+[PHP]
+output_buffering = Off
+max_execution_time = 300
+max_input_time = 300
+memory_limit = 512M
+post_max_size = 1024M
+upload_max_filesize = 1024M
+date.timezone = Europe/Zurich
+max_input_vars = 10000
+[Session]
+session.gc_maxlifetime = 3600     
+[opcache]
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=256M
+
+EOF
+
+    cat >>/etc/php/8.5/fpm/php.ini <<'EOF'
+
+[PHP]
+output_buffering = Off
+max_execution_time = 300
+max_input_time = 300
+memory_limit = 512M
+post_max_size = 1024M
+upload_max_filesize = 1024M
+date.timezone = Europe/Zurich
+max_input_vars = 10000
+[Session]
+session.gc_maxlifetime = 3600     
+[opcache]
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=256M
+
+EOF
+
+}
+
 function enable_apache_mod() {
 
     #####################################
@@ -900,7 +968,7 @@ function inst_gat() {
     ###################################
 
     cd /usr/local/bin || exit
-    wget https://github.com/koki-develop/gat/releases/download/v0.24.1/gat_Linux_x86_64.tar.gz
+    wget https://github.com/koki-develop/gat/releases/download/v0.26.0/gat_Linux_x86_64.tar.gz
     tar -xvzf gat_Linux_x86_64.tar.gz
     chown root:root gat
     chmod +x gat
@@ -917,10 +985,10 @@ function inst_jos() {
     ###################################
 
     cd /usr/local/bin || exit
-    wget https://github.com/kamiyaa/joshuto/releases/download/v0.9.8/joshuto-v0.9.8-x86_64-unknown-linux-musl.tar.gz
-    tar -vxzf joshuto-v0.9.8-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin --strip-components=1
+    wget https://github.com/kamiyaa/joshuto/releases/download/v0.9.9/joshuto-v0.9.9-x86_64-unknown-linux-musl.tar.gz
+    tar -vxzf joshuto-v0.9.9-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin --strip-components=1
     chown root:root joshuto
-    rm joshuto-v0.9.8-x86_64-unknown-linux-musl.tar.gz
+    rm joshuto-v0.9.9-x86_64-unknown-linux-musl.tar.gz
 }
 
 function inst_base() {
@@ -1172,6 +1240,7 @@ inst_php81             # function
 inst_php82             # function
 inst_php83             # function
 inst_php84             # function
+inst_php85             # function
 enable_apache_mod      # function
 inst_redis             # function
 inst_virtualmin_config # function
