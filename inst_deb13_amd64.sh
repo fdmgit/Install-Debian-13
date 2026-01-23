@@ -50,7 +50,7 @@ function print_conf() {
 function pre_inst_ssh() {
 
     cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/bashrc.ini
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/bashrc.ini
 
     cp bashrc.ini /root/.bashrc
     cp bashrc.ini /etc/skel/.bashrc
@@ -347,9 +347,7 @@ function inst_smart_nvme() {
     ######################################
 
     cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/smartmontools_7.4-2~bpo12+1_amd64.deb
-    dpkg -i smartmontools_7.4-2~bpo12+1_amd64.deb
-    rm smartmontools_7.4-2~bpo12+1_amd64.deb
+    apt install smartmontools -y 
     apt install nvme-cli -y
 
 }
@@ -401,7 +399,7 @@ function inst_sury_repo() {
     #### install new PHP versions
     ##############################
 
-    apt -y install lsb-release apt-transport-https ca-certificates
+    apt -y install lsb-release ca-certificates
 
     echo | curl -sSL https://packages.sury.org/apache2/README.txt | sudo bash -xe
  
@@ -933,7 +931,7 @@ function inst_base() {
     apt update
     apt upgrade -y
     #apt install plocate sntp ntpdate software-properties-common curl imagemagick -y
-    apt install plocate curl imagemagick -y
+    apt install plocate curl apt-transport-https imagemagick -y
     timedatectl set-timezone Europe/Zurich
 
     hostnamectl set-hostname "$fqdn"  # set hostname
