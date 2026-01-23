@@ -140,7 +140,7 @@ EOF
     cd /etc/skel || exit
     mkdir public_html
     cd public_html || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/index_web.php
+    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/index_web.php
     mv index_web.php index.php
     cd /root || exit
 }
@@ -853,7 +853,7 @@ function post_inst() {
     } >>.bash_aliases
     cp .bash_aliases /etc/skel/.bash_aliases
     rm -R .spamassassin
-    rm inst_deb12_amd64.sh
+    rm inst_deb13_amd64.sh
 
     ################################
     ### remove default apache2 files
