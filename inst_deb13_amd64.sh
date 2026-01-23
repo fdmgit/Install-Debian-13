@@ -92,7 +92,7 @@ function pre_inst_ssh() {
         echo "file authorized_keys exists"
     else
         cd /root/.ssh || exit
-        wget https://raw.githubusercontent.com/fdmgit/virtualmin/main/authorized_keys
+        wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/authorized_keys
     fi
 
     ###################################
@@ -140,7 +140,7 @@ EOF
     cd /etc/skel || exit
     mkdir public_html
     cd public_html || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/index_web.php
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/index_web.php
     mv index_web.php index.php
     cd /root || exit
 }
@@ -172,7 +172,7 @@ function inst_logo_styles() {
 
     cat >>/root/inst_logo_styles.sh <<'EOF'
 
-wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/logostyle.zip
+wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/logostyle.zip
 unzip logostyle.zip
 cp logo.png /etc/webmin/authentic-theme/
 cp logo_welcome.png /etc/webmin/authentic-theme/
@@ -183,7 +183,7 @@ rm styles.css
 rm logostyle.zip
 
 cd //home/._default_hostname/public_html/ || exit
-wget -O index.html https://raw.githubusercontent.com/fdmgit/install-debian-13/main/index_web.php
+wget -O index.html https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/index_web.php
 sed  -i  "s|<?php echo \$_SERVER\['HTTP_HOST'\]; ?>|$(hostname)|g" index.html
 chown _default_hostname:_default_hostname index.html
 rm index.php
@@ -229,9 +229,9 @@ function inst_virtualmin_config() {
     ###################################
 
     cd /etc/webmin/virtual-server/plans || exit
-    wget https://raw.githubusercontent.com/fdmgit/virtualmin/main/160880314564582
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/160880314564582
     cd /etc/webmin/virtual-server/templates || exit
-    wget https://raw.githubusercontent.com/fdmgit/virtualmin/main/server-level.tar.gz
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/server-level.tar.gz
     tar -xvzf server-level.tar.gz
     rm server-level.tar.gz
 
@@ -291,7 +291,7 @@ function inst_f2b() {
 
     apt -y install python3-systemd
 
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/jail-deb13.local
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/jail-deb13.local
     cd /etc/fail2ban || exit
     mv jail.local jail.local.orig
     cp /root/jail-deb13.local jail.local
@@ -315,9 +315,9 @@ function inst_firewalld_ipset() {
 
     systemctl stop firewalld
     cd /root
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/ipsetgen.sh
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/ipsetgen.sh
     chmod +x ipsetgen.sh
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/ipsetinst.sh
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/ipsetinst.sh
     chmod +x ipsetinst.sh
 
     source ./ipsetgen.sh
@@ -347,7 +347,7 @@ function inst_smart_nvme() {
     ######################################
 
     cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/smartmontools_7.4-2~bpo12+1_amd64.deb
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/smartmontools_7.4-2~bpo12+1_amd64.deb
     dpkg -i smartmontools_7.4-2~bpo12+1_amd64.deb
     rm smartmontools_7.4-2~bpo12+1_amd64.deb
     apt install nvme-cli -y
