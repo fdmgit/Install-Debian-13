@@ -177,9 +177,27 @@ unzip logostyle.zip
 cp logo.png /etc/webmin/authentic-theme/
 cp logo_welcome.png /etc/webmin/authentic-theme/
 cp styles.css /etc/webmin/authentic-theme/
+cd /usr/share/webmin/authentic-theme/images/favicons/virtualmin/ 
+mv favicon-16x16.png favicon-16x16.png.orig
+mv favicon-32x32.png favicon-32x32.png.orig
+mv apple-touch-icon.png apple-touch-icon.png.orig
+cd /usr/share/webmin/authentic-theme/images/favicons/webmin/
+mv favicon-16x16.png favicon-16x16.png.orig
+mv favicon-32x32.png favicon-32x32.png.orig
+mv apple-touch-icon.png apple-touch-icon.png.orig
+cd /root || exit
+cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+
 rm logo.png
 rm logo_welcome.png
 rm styles.css
+rm favicon*.png
+rm apple-touch-icon.png
 rm logostyle.zip
 
 cd //home/._default_hostname/public_html/ || exit
