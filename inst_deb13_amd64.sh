@@ -118,7 +118,7 @@ function pre_inst_ssh() {
     #sed -i "s|\#MaxAuthTries 6|MaxAuthTries 4|g" /etc/ssh/sshd_config
     #sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
 
-    cat >>/etc/ssh/sshd_config/sshd_hardening.conf<<'EOF'
+    cat >>/etc/ssh/sshd_config/sshd_hardening.conf <<'EOF'
 Port 49153
 LoginGraceTime 1m
 PermitRootLogin prohibit-password
@@ -358,18 +358,18 @@ function inst_mariadb() {
     #### Install MariaDB Repository
     ##################################
 
-    curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
-
+    curl -o /usr/share/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
+    cd /usr/share/keyrings || exit
+    ln -s mariadb-keyring.pgp mariadb-keyring.gpg
     cd /etc/apt/sources.list.d || exit
-    touch mariadb.list
+    touch mariadb.sources
 
-    cat >>/etc/apt/sources.list.d/mariadb.list <<'EOF'
-
-# deb.mariadb.org is a dynamic mirror if your preferred mirror goes offline. See https://mariadb.org/mirrorbits/ for details.
-# deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://deb.mariadb.org/10.11/debian bookworm main
-
-deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirror.mva-n.net/mariadb/repo/10.11/debian bookworm main
-# deb-src [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirror.mva-n.net/mariadb/repo/10.11/debian bookworm main
+    cat >>/etc/apt/sources.list.d/mariadb.sources <<'EOF'
+Types: deb deb-src
+URIs: https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian
+Suites: trixie
+Components: main
+Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 
 EOF
 
