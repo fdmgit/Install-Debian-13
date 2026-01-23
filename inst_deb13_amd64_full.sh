@@ -66,7 +66,7 @@ function pre_inst_ssh() {
     ###################################
     #### enable linenumbers for nano
     ###################################
-    sed -i "s|# set linenumbers|set linenumbers|g" /etc/nanorc
+    #sed -i "s|# set linenumbers|set linenumbers|g" /etc/nanorc
 
     ###################################
     #### change file limit for root
@@ -112,11 +112,24 @@ function pre_inst_ssh() {
     #### Restrict supported key exchange, cipher, and MAC algorithms
     echo -e "# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\n\nKexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,gss-curve25519-sha256-,diffie-hellman-group16-sha512,gss-group16-sha512-,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256\n\nCiphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\n\nMACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com\n\nHostKeyAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nRequiredRSASize 3072\n\nCASignatureAlgorithms sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nGSSAPIKexAlgorithms gss-curve25519-sha256-,gss-group16-sha512-\n\nHostbasedAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-256\n\nPubkeyAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-256\n\n" >/etc/ssh/sshd_config.d/ssh-audit_hardening.conf
 
-    sed -i "s|\#Port 22|Port 49153|g" /etc/ssh/sshd_config
-    sed -i "s|\#LoginGraceTime 2m|LoginGraceTime 1m|g" /etc/ssh/sshd_config
-    sed -i "s|PermitRootLogin without-password|PermitRootLogin prohibit-password|g" /etc/ssh/sshd_config
-    sed -i "s|\#MaxAuthTries 6|MaxAuthTries 4|g" /etc/ssh/sshd_config
-    sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
+    #sed -i "s|\#Port 22|Port 49153|g" /etc/ssh/sshd_config
+    #sed -i "s|\#LoginGraceTime 2m|LoginGraceTime 1m|g" /etc/ssh/sshd_config
+    #sed -i "s|PermitRootLogin without-password|PermitRootLogin prohibit-password|g" /etc/ssh/sshd_config
+    #sed -i "s|\#MaxAuthTries 6|MaxAuthTries 4|g" /etc/ssh/sshd_config
+    #sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
+
+    cat >>/etc/ssh/sshd_config/sshd_hardening.conf<<'EOF'
+Port 49153
+LoginGraceTime 1m
+PermitRootLogin prohibit-password
+MaxAuthTries 4
+AllowTcpForwarding no
+X11Forwarding no
+AllowAgentForwarding no
+
+EOF
+
+
     sed -i "s|session    required     pam_env.so user_readenv=1 envfile=/etc/default/locale|session    required     pam_env.so envfile=/etc/default/locale|g" /etc/pam.d/sshd
     systemctl restart sshd
     sleep 5
@@ -128,7 +141,7 @@ function pre_inst_ssh() {
     cd /etc/skel || exit
     mkdir public_html
     cd public_html || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/index_web.php
+    wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/index_web.php
     mv index_web.php index.php
     cd /root || exit
 }
@@ -160,7 +173,7 @@ function inst_logo_styles() {
 
     cat >>/root/inst_logo_styles.sh <<'EOF'
 
-wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/logostyle.zip
+wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/logostyle.zip
 unzip logostyle.zip
 cp logo.png /etc/webmin/authentic-theme/
 cp logo_welcome.png /etc/webmin/authentic-theme/
@@ -172,7 +185,7 @@ rm logostyle.zip
 rm inst_logo_styles.sh
 
 cd //home/._default_hostname/public_html/ || exit
-wget -O index.html https://raw.githubusercontent.com/fdmgit/install-debian-12/main/index_web.php
+wget -O index.html https://raw.githubusercontent.com/fdmgit/install-debian-13/main/index_web.php
 sed  -i  "s|<?php echo \$_SERVER\['HTTP_HOST'\]; ?>|$(hostname)|g" index.html
 chown _default_hostname:_default_hostname index.html
 rm index.php
