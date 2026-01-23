@@ -872,7 +872,7 @@ EOF
 
 }
 
-function enable_apache_mod() {
+function enable_apache_modules() {
 
     #####################################
     #### Enable additional Apache modules
@@ -1241,7 +1241,7 @@ inst_php82             # function
 inst_php83             # function
 inst_php84             # function
 inst_php85             # function
-enable_apache_mod      # function
+enable_apache_modules  # function
 inst_redis             # function
 inst_virtualmin_config # function
 inst_pwgen             # function
