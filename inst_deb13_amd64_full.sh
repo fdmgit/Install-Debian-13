@@ -84,7 +84,7 @@ function pre_inst_ssh() {
 
     if [ -d /root/.ssh ]; then
         echo ".ssh exists"
-    else
+    else 
         mkdir /root/.ssh
     fi
 
