@@ -1236,6 +1236,7 @@ done
 
 fqdn=$(sed 's/\.*[^\.]*\.[^\.]*$//g'  <<< $fqdn)
 subdom=$(echo "$fqdn" | awk '{print toupper($0)}')
+sed -i "s/session_header=Login to Webmin/session_header=Login to $subdom/g" /usr/share/webmin/lang/en
 
 echo -e "${NC}"
 read -r -p "     Ready to start installation [Y/n] ? " start_inst
