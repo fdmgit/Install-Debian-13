@@ -405,6 +405,9 @@ Components: main
 Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 
 EOF
+    sed -i 's/[mariadb]/[mariadb]\n\nfeddback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+    systemctl restart mariadb
+    sleep 10
 
     #apt update
     #echo No | apt upgrade -y
