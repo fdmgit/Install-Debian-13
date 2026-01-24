@@ -407,7 +407,7 @@ Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 EOF
 
     apt update
-    echo No | apt upgrade -y
+    #echo No | apt upgrade -y
     cd /etc/mysql/mariadb.conf.d || exit
     #ls provider*.cnf | xargs -I{} mv {} {}.orig
     find provider*.cnf -print0 | xargs -0 -I{} mv {} {}.orig
