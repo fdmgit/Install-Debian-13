@@ -405,7 +405,8 @@ Components: main
 Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 
 EOF
-    sed -i 's/[mariadb]/[mariadb]\n\nfeddback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+    sed -i 's/\[mariadb-11.8\]/\[mariadb-11.8\]\n\nfeedback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     systemctl restart mariadb
     sleep 10
 
@@ -985,10 +986,6 @@ function inst_virtualmin() {
     virtualmin-config-system -i=Fail2banFirewalld
     rm virtualmin-install.sh
 
-    sed -i 's/[mariadb]/[mariadb]\n\nfeddback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-    systemctl restart mariadb
-    sleep 10    
-
 }
 
 function inst_gat() {
@@ -1285,6 +1282,7 @@ inst_f2b               # function
 enh_nft                # function
 inst_logo_styles       # function
 inst_firewalld_ipset   # function
+inst_mariadb           # function
 closing_msg            # function
 
 reboot
