@@ -407,7 +407,7 @@ Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 EOF
 
     apt update
-    echo "N" | apt upgrade -y
+    echo No | apt upgrade -y
     cd /etc/mysql/mariadb.conf.d || exit
     #ls provider*.cnf | xargs -I{} mv {} {}.orig
     find provider*.cnf -print0 | xargs -0 -I{} mv {} {}.orig
@@ -1253,31 +1253,31 @@ inst_base              # function
 #inst_gat               # function
 #inst_jos               # function
 #inst_hstr              # function
-inst_virtualmin        # function
-inst_add_python        # function
-dis_services           # function
-inst_sury_repo         # function
+#inst_virtualmin        # function
+#inst_add_python        # function
+#dis_services           # function
+#inst_sury_repo         # function
 #inst_php74             # function
 #inst_php80             # function
 #inst_php81             # function
-inst_php82             # function
-inst_php83             # function
-inst_php84             # function
+#inst_php82             # function
+#inst_php83             # function
+#inst_php84             # function
 #inst_php85             # function
-enable_apache_modules  # function
-inst_redis             # function
-inst_virtualmin_config # function
+#enable_apache_modules  # function
+#inst_redis             # function
+#inst_virtualmin_config # function
 #inst_pwgen             # function
 #inst_mc                # function
 inst_mariadb           # function
 #inst_bip               # function
-post_inst              # function
-inst_motd              # function
-inst_composer          # function
-inst_f2b               # function
-enh_nft                # function
-inst_logo_styles       # function
-inst_firewalld_ipset   # function
+#post_inst              # function
+#inst_motd              # function
+#inst_composer          # function
+#inst_f2b               # function
+#enh_nft                # function
+#inst_logo_styles       # function
+#inst_firewalld_ipset   # function
 closing_msg            # function
 
 reboot
