@@ -415,16 +415,6 @@ EOF
 
 }
 
-function inst_kernel() {
-
-    ##############################
-    #### Install new Linux Kernel
-    ##############################
-
-    # apt install linux-image-6.12.30+bpo-amd64 -y
-    # apt install linux-headers-6.12.12+bpo-amd64 -y # development
-
-}
 
 function inst_sury_repo() {
 
