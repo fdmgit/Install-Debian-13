@@ -206,8 +206,8 @@ sed  -i  "s|<?php echo \$_SERVER\['HTTP_HOST'\]; ?>|$(hostname)|g" index.html
 chown _default_hostname:_default_hostname index.html
 rm index.php
 
-fqdn=$(sed 's/\.*[^\.]*\.[^\.]*$//g'  <<< $fqdn)
-subdom=$(echo "$fqdn" | awk '{print toupper($0)}')
+hname=$(sed 's/\.*[^\.]*\.[^\.]*$//g'  <<< $(hostname))
+subdom=$(echo "$hname" | awk '{print toupper($0)}')
 sed -i "s/session_header=Login to Webmin/session_header=Login to $subdom/g" /usr/share/webmin/lang/en
 
 cd /root || exit
