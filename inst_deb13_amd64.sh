@@ -985,6 +985,10 @@ function inst_virtualmin() {
     virtualmin-config-system -i=Fail2banFirewalld
     rm virtualmin-install.sh
 
+    sed -i 's/[mariadb]/[mariadb]\n\nfeddback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+    systemctl restart mariadb
+    sleep 10    
+
 }
 
 function inst_gat() {
