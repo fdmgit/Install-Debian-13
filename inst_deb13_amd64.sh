@@ -1253,7 +1253,7 @@ inst_base              # function
 #inst_gat               # function
 #inst_jos               # function
 #inst_hstr              # function
-inst_virtualmin        # function
+#inst_virtualmin        # function
 #inst_add_python        # function
 #dis_services           # function
 #inst_sury_repo         # function
