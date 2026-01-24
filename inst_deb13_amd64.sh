@@ -357,6 +357,16 @@ function inst_pwgen() {
 
 }
 
+function inst_mc() {
+
+    #################################
+    #### Install Midnight Commander
+    #################################
+
+    apt update
+    apt install mc -y
+
+}
 
 function inst_smart_nvme() {
 
@@ -1263,7 +1273,7 @@ enable_apache_modules  # function
 inst_redis             # function
 inst_virtualmin_config # function
 inst_pwgen             # function
-#inst_kernel            # function
+inst_mc                # function
 inst_mariadb           # function
 inst_bip               # function
 post_inst              # function
