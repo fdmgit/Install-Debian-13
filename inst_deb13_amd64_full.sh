@@ -352,7 +352,7 @@ function inst_mc() {
     #################################
 
     apt update
-    apt install mc -y
+    apt install mc  -y
 
 }
 
