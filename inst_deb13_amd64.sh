@@ -976,8 +976,8 @@ function inst_virtualmin() {
     
     ##### production
     wget -O virtualmin-install.sh https://download.virtualmin.com/gpl/scripts/virtualmin-install.sh
-    yes | sh virtualmin-install.sh --mini   #  < full | mini >
-    sh virtualmin-install.sh  -y
+    yes | sh virtualmin-install.sh --type mini   #  < full | mini >
+    #sh virtualmin-install.sh  -y
     apt install fail2ban -y
     virtualmin-config-system -i=Fail2banFirewalld
     rm virtualmin-install.sh
