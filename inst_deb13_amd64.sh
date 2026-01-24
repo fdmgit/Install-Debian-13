@@ -411,7 +411,7 @@ EOF
     sleep 10
 
     #apt update
-    #echo "No" | apt upgrade -y
+    #echo "N" | apt upgrade -y
     cd /etc/mysql/mariadb.conf.d || exit
     #ls provider*.cnf | xargs -I{} mv {} {}.orig
     find provider*.cnf -print0 | xargs -0 -I{} mv {} {}.orig
