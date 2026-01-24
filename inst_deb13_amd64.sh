@@ -200,7 +200,7 @@ rm favicon*.png
 rm apple-touch-icon.png
 rm logostyle.zip
 
-cd //home/._default_hostname/public_html/ || exit
+cd /home/._default_hostname/public_html/ || exit
 wget -O index.html https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/index_web.php
 sed  -i  "s|<?php echo \$_SERVER\['HTTP_HOST'\]; ?>|$(hostname)|g" index.html
 chown _default_hostname:_default_hostname index.html
