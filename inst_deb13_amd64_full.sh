@@ -1160,6 +1160,9 @@ until [[ "$fqdn" =~ ^.*\..*\..*$ ]]; do
     fi
 done
 
+fqdn=$(sed 's/\.*[^\.]*\.[^\.]*$//g'  <<< $fqdn)
+subdom=$(echo "$fqdn" | awk '{print toupper($0)}')
+ 
 echo -e "${NC}"
 read -r -p "     Ready to start installation [Y/n] ? " start_inst
 if [[ "$start_inst" = "" ]]; then
