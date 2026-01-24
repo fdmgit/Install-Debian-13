@@ -410,7 +410,7 @@ EOF
     sleep 10
 
     #apt update
-    #echo No | apt upgrade -y
+    #echo "No" | apt upgrade -y
     cd /etc/mysql/mariadb.conf.d || exit
     #ls provider*.cnf | xargs -I{} mv {} {}.orig
     find provider*.cnf -print0 | xargs -0 -I{} mv {} {}.orig
@@ -1272,7 +1272,7 @@ inst_redis             # function
 inst_virtualmin_config # function
 inst_pwgen             # function
 #inst_mc                # function
-inst_mariadb           # function
+#inst_mariadb           # function
 inst_bip               # function
 post_inst              # function
 inst_motd              # function
