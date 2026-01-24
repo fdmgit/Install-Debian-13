@@ -975,8 +975,7 @@ function inst_virtualmin() {
     #yes | sh virtualmin-install.sh --type mini  --branch rc #  < full | mini >    
     
     ##### production
-    wget -O virtualmin-install.sh https://download.virtualmin.comy
-    /virtualmin-install.sh
+    wget -O virtualmin-install.sh https://download.virtualmin.com/virtualmin-install.sh
     yes | sh virtualmin-install.sh --type mini   #  < full | mini >
     #sh virtualmin-install.sh  -y
     apt install fail2ban -y
