@@ -118,7 +118,7 @@ function pre_inst_ssh() {
     #sed -i "s|\#MaxAuthTries 6|MaxAuthTries 4|g" /etc/ssh/sshd_config
     #sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
 
-    cat >>/etc/ssh/sshd_config/sshd_hardening.conf <<'EOF'
+    cat >>/etc/ssh/sshd_config.d/sshd_hardening.conf <<'EOF'
 Port 49153
 LoginGraceTime 1m
 PermitRootLogin prohibit-password
