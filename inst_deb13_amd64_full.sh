@@ -351,11 +351,6 @@ function inst_mc() {
     #### Install Midnight Commander
     #################################
 
-    cd /usr/share/keyrings || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/tataranovich-keyring.gpg
-    echo "# Repository for Midnight Commander" >/etc/apt/sources.list.d/mc.list
-    echo "deb [signed-by=/usr/share/keyrings/tataranovich-keyring.gpg] http://www.tataranovich.com/debian bookworm main" >>/etc/apt/sources.list.d/mc.list
-
     apt update
     apt install mc -y
 
@@ -367,10 +362,7 @@ function inst_smart_nvme() {
     #### Install smartmontools & nvme-cli
     ######################################
 
-    cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/smartmontools_7.4-2~bpo12+1_amd64.deb
-    dpkg -i smartmontools_7.4-2~bpo12+1_amd64.deb
-    rm smartmontools_7.4-2~bpo12+1_amd64.deb
+    apt install smartmontools -y
     apt install nvme-cli -y
 
 }
