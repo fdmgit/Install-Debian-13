@@ -962,6 +962,17 @@ function enable_apache_modules() {
 
 }
 
+function inst_wsgi_apache_module() {
+
+    #####################################
+    #### Install WSGI Apache module
+    #####################################
+
+    apt install libapache2-mod-wsgi-py3 -y
+
+}
+
+
 function dis_services() {
 
     ##############################
@@ -1319,17 +1330,18 @@ inst_php83             # function
 inst_php84             # function
 #inst_php85             # function
 enable_apache_modules  # function
+is
 inst_redis             # function
 inst_virtualmin_config # function
 inst_pwgen             # function
 #inst_mc                # function
 #inst_mariadb           # function
-inst_bip               # function
+#inst_bip               # function
 post_inst              # function
 inst_motd              # function
 inst_composer          # function
 inst_f2b               # function
-enh_nft                # function
+#enh_nft                # function
 inst_logo_styles       # function
 #inst_firewalld_ipset   # function
 inst_geoip             # function
