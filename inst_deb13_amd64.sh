@@ -992,6 +992,7 @@ function post_inst() {
         echo "alias gc='gat'"
         echo "alias ed=nano"
         echo "alias hh=hstr"
+        echo "alias apt='PAGER= apt'"
     } >>.bash_aliases
     cp .bash_aliases /etc/skel/.bash_aliases
     rm -R .spamassassin
