@@ -376,7 +376,7 @@ function inst_geoip() {
     
     #get WAN interface
     all_ifaces="$([ -r "/proc/net/dev" ] && sed -n '/^[[:space:]]*[^[:space:]]*:/{s/^[[:space:]]*//;s/:.*//p}' < /proc/net/dev | grep -vx 'lo')"
-    sed -i "s/ifaces=/ifaces=$all_ifaces/g geoip-shell.conf
+    sed -i "s/ifaces=/ifaces=$all_ifaces/g" geoip-shell.conf
 
     cp /etc/geoip-shell/install/geoip-shell.conf /etc/geoip-shell/geoip-shell.conf
     cp /etc/geoip-shell/install/setupdone /etc/geoip-shell/setupdone
@@ -395,7 +395,7 @@ function inst_geoip() {
     #echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence" >> /var/spool/cron/crontabs/root
 
     (crontab -l 2>/dev/null || true; echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update") | crontab -
-    (crontab -l 2>/dev/null || true; echo @reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence") | crontab -
+    (crontab -l 2>/dev/null || true; echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence") | crontab -
 
     
     rm -rf geoipconf.zip
