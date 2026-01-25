@@ -369,8 +369,8 @@ function inst_geoip() {
     sh geoip-shell-install.sh -z
 
     # copy files to configuration directory
-    mkdir /etc/geoip-shell
-    cd /etc/geoip-shell
+    mkdir /etc/geoip-shell/install
+    cd /etc/geoip-shell/install
     wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/geoipconf.zip
     unzip geoipconf.zip
     
@@ -378,6 +378,11 @@ function inst_geoip() {
     all_ifaces="$([ -r "/proc/net/dev" ] && sed -n '/^[[:space:]]*[^[:space:]]*:/{s/^[[:space:]]*//;s/:.*//p}' < /proc/net/dev | grep -vx 'lo')"
     
     sed -i "s/ifaces=/ifaces=$all_ifaces/g /etc/geoip-shell/geoip-shell.conf
+
+    cp /etc/geoip-shell/install/geoip-shell.conf /etc/geoip-shell/geoip-shell.conf
+    cp /etc/geoip-shell/install/setupdone /etc/geoip-shell/setupdone
+
+
     
     mkdir /tmp/geoip-shell-run
     mkdir /tmp/geoip-shell-run/iplists
@@ -389,6 +394,7 @@ function inst_geoip() {
     # Setup cron jobs
     
     echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update" >> /var/spool/cron/crontabs/root
+    echo ""
     echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence" >> /var/spool/cron/crontabs/root
     
     rm -rf geoipconf.zip
