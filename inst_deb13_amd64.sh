@@ -352,6 +352,44 @@ function inst_firewalld_ipset() {
 
 }
 
+function inst_geoip() {
+
+    mkdir /root/geoip 
+    cd /root/geoip
+    # get geoip-shell source; newest release
+    curl -L "$(curl -s https://api.github.com/repos/friendly-bits/geoip-shell/releases | grep -m1 -o 'https://api.github.com/repos/friendly-bits/geoip-shell/tarball/[^"]*')" > geoip-shell.tar.gz
+    tar -zxvf geoip-shell.tar.gz
+    cd friendly*
+    mv * /root/geoip/
+    mv .* /root/geoip/
+    rm -rf friendly*
+    
+    # copy files to configuration directory
+    mkdir /etc/geoip-shell
+    cd /etc/geoip-shell
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/geoipconf.zip
+    unzip geoipconf.zip
+    
+    #get WAN interface
+    all_ifaces="$([ -r "/proc/net/dev" ] && sed -n '/^[[:space:]]*[^[:space:]]*:/{s/^[[:space:]]*//;s/:.*//p}' < /proc/net/dev | grep -vx 'lo')"
+    
+    sed -i "s/ifaces=/ifaces=$all_ifaces/g /etc/geoip-shell/geoip-shell.conf
+    
+    mkdir /tmp/geoip-shell-run
+    mkdir /tmp/geoip-shell-run/iplists
+    mkdir /tmp/geoip-shell-tmp
+    mkdir /tmp/geoip-shell-tmp/fetch
+    
+    geoip-shell restore
+    
+    # Setup cron jobs
+    
+    echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update" >> /var/spool/cron/crontabs/root
+    echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence" >> /var/spool/cron/crontabs/root
+    
+    rm -rf geoipconf.zip
+}
+
 function inst_pwgen() {
 
     ###################################
@@ -1281,7 +1319,8 @@ inst_composer          # function
 inst_f2b               # function
 enh_nft                # function
 inst_logo_styles       # function
-inst_firewalld_ipset   # function
+#inst_firewalld_ipset   # function
+inst_geoip             # function
 inst_mariadb           # function
 closing_msg            # function
 
