@@ -362,8 +362,12 @@ function inst_geoip() {
     cd friendly*
     mv * /root/geoip/
     mv .* /root/geoip/
+    cd /root/geoip
     rm -rf friendly*
-    
+    rm geoip-shell.tar.gz
+
+    sh geoip-shell-install.sh -z
+
     # copy files to configuration directory
     mkdir /etc/geoip-shell
     cd /etc/geoip-shell
