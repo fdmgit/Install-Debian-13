@@ -393,9 +393,13 @@ function inst_geoip() {
     
     # Setup cron jobs
     
-    echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update" >> /var/spool/cron/crontabs/root
-    echo ""
-    echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence" >> /var/spool/cron/crontabs/root
+    #echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update" >> /var/spool/cron/crontabs/root
+    #echo ""
+    #echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence" >> /var/spool/cron/crontabs/root
+
+    (crontab -l 2>/dev/null || true; echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update") | crontab -
+    (crontab -l 2>/dev/null || true; echo @reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence") | crontab -
+
     
     rm -rf geoipconf.zip
 }
