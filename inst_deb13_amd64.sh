@@ -1330,7 +1330,7 @@ inst_php83             # function
 inst_php84             # function
 #inst_php85             # function
 enable_apache_modules  # function
-is
+inst_wsgi_apache_module # function
 inst_redis             # function
 inst_virtualmin_config # function
 inst_pwgen             # function
