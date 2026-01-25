@@ -376,14 +376,11 @@ function inst_geoip() {
     
     #get WAN interface
     all_ifaces="$([ -r "/proc/net/dev" ] && sed -n '/^[[:space:]]*[^[:space:]]*:/{s/^[[:space:]]*//;s/:.*//p}' < /proc/net/dev | grep -vx 'lo')"
-    
-    sed -i "s/ifaces=/ifaces=$all_ifaces/g /etc/geoip-shell/geoip-shell.conf
+    sed -i "s/ifaces=/ifaces=$all_ifaces/g geoip-shell.conf
 
     cp /etc/geoip-shell/install/geoip-shell.conf /etc/geoip-shell/geoip-shell.conf
     cp /etc/geoip-shell/install/setupdone /etc/geoip-shell/setupdone
-
-
-    
+   
     mkdir /tmp/geoip-shell-run
     mkdir /tmp/geoip-shell-run/iplists
     mkdir /tmp/geoip-shell-tmp
