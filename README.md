@@ -9,5 +9,5 @@ wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/inst_deb13_
 To Install AMD64 version (UNSTABLE) use:
 
 ```
-wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/inst_deb13_amd64_dev.sh && bash inst_deb13_amd64.sh
+wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/inst_deb13_amd64_dev.sh && bash inst_deb13_amd64_dev.sh
 ```
