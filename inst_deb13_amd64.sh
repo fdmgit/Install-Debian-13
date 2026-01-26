@@ -325,8 +325,6 @@ allowipv6 = auto
 
 EOF
 
-    touch /var/log/auth.log
-    touch /var/log/syslog
     #cp -av /usr/local/bin/fail2ban-* /usr/bin/
     #rm /usr/local/bin/fail2ban-*
 
@@ -1008,7 +1006,7 @@ function inst_iliascripts() {
 function post_inst() {
 
     ##############################
-    #### Update locate DB
+    #### Update .bash_aliases
     ##############################
 
     cd /root || exit
@@ -1060,7 +1058,10 @@ function inst_virtualmin() {
     ##### production
     wget -O virtualmin-install.sh https://download.virtualmin.com/virtualmin-install.sh
     yes | sh virtualmin-install.sh --type mini   --branch stable #  < full | mini >
-    #sh virtualmin-install.sh  -y
+
+    #############################################
+    #### Install fail2ban and configure firewalld
+    #############################################
     apt install fail2ban -y
     virtualmin-config-system -i=Fail2banFirewalld
     rm virtualmin-install.sh
@@ -1110,6 +1111,13 @@ function inst_base() {
 
     hostnamectl set-hostname "$fqdn"  # set hostname
     echo "root:${rpasswd}" | chpasswd # set root password -
+
+    ###################################
+    #### create log files for fail2ban
+    ###################################
+    touch /var/log/auth.log
+    touch /var/log/syslog
+
 
 }
 
