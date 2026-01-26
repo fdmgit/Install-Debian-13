@@ -300,14 +300,12 @@ function inst_f2b() {
     ###################################
 
     cd /root || exit
-    sleep 5
-    git clone https://github.com/fail2ban/fail2ban.git
-    sleep 10
-    cd fail2ban || exit
-    python3 setup.py install
-    sleep 10
-    cd /root || exit
-    rm -r /root/fail2ban
+
+    #git clone https://github.com/fail2ban/fail2ban.git
+    #cd fail2ban || exit
+    #python3 setup.py install
+    #cd /root || exit
+    #rm -r /root/fail2ban
 
     wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/jail-deb13.local
     cd /etc/fail2ban || exit
@@ -322,9 +320,8 @@ allowipv6 = auto
 
 EOF
 
-    cp -av /usr/local/bin/fail2ban-* /usr/bin/
-    sleep 5
-    rm /usr/local/bin/fail2ban-*
+    #cp -av /usr/local/bin/fail2ban-* /usr/bin/
+    #rm /usr/local/bin/fail2ban-*
 
 }
 
