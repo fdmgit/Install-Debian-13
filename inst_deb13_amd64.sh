@@ -990,6 +990,22 @@ function dis_services() {
 
 }
 
+function inst_iliascripts() {
+
+    ##############################
+    #### ILIAS Scripts
+    ##############################
+
+    cd /usr/local/bin || exit
+    wget -O apache-log-stats https://raw.githubusercontent.com/iliaross/script-stash/refs/heads/main/bash/apache-log-stats.bash
+    wget -O net-ip-lookup https://raw.githubusercontent.com/iliaross/script-stash/refs/heads/main/perl/net-ip-lookup.pl
+    wget -O apache-check-vhosts https://raw.githubusercontent.com/iliaross/script-stash/refs/heads/main/perl/apache-check-vhosts.pl
+    chmod +x apache-log-stats
+    chmod +x net-ip-lookup
+    chmod +x apache-check-vhosts
+
+}
+
 function post_inst() {
 
     ##############################
@@ -1004,6 +1020,9 @@ function post_inst() {
         echo "alias ed=nano"
         echo "alias hh=hstr"
         echo "alias apt='PAGER= apt'"
+        echo "alias apache-stats=apache-log-stats"
+        echo "alias iplookup='net-ip-lookup'"
+        echo "alias check-vhosts='apache-check-vhosts'"
     } >>.bash_aliases
     cp .bash_aliases /etc/skel/.bash_aliases
     rm -R .spamassassin
@@ -1337,6 +1356,7 @@ inst_pwgen             # function
 #inst_mc                # function
 #inst_mariadb           # function
 #inst_bip               # function
+inst_iliascripts       # function
 post_inst              # function
 inst_motd              # function
 inst_composer          # function
