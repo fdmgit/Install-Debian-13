@@ -1048,7 +1048,7 @@ function inst_virtualmin() {
     
     ##### production
     wget -O virtualmin-install.sh https://download.virtualmin.com/virtualmin-install.sh
-    yes | sh virtualmin-install.sh --type mini   --branch stable #  < full | mini >
+    yes | sh virtualmin-install.sh --type mini   --branch unstable #  < full | mini >
 
     #############################################
     #### Install fail2ban and configure firewalld
