@@ -1002,7 +1002,7 @@ function inst_iliascripts() {
     wget -O apache-check-vhosts https://raw.githubusercontent.com/iliaross/script-stash/refs/heads/main/perl/apache-check-vhosts.pl
     chmod +x apache-log-stats
     chmod +x net-ip-lookup
-    chmod +x apache-check-vhosts
+    chmod +x apache-check-vhosts    
 
 }
 
@@ -1020,7 +1020,7 @@ function post_inst() {
         echo "alias ed=nano"
         echo "alias hh=hstr"
         echo "alias apt='PAGER= apt'"
-        echo "alias apache-stats=apache-log-stats"
+        echo "alias apache-stats='apache-log-stats'"
         echo "alias iplookup='net-ip-lookup'"
         echo "alias check-vhosts='apache-check-vhosts'"
     } >>.bash_aliases
