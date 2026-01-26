@@ -177,11 +177,11 @@ unzip logostyle.zip
 cp logo.png /etc/webmin/authentic-theme/
 cp logo_welcome.png /etc/webmin/authentic-theme/
 cp styles.css /etc/webmin/authentic-theme/
-cd /usr/share/webmin/authentic-theme/images/favicons/virtualmin/ 
+cd /usr/share/webmin/authentic-theme/images/favicons/virtualmin/ || exit
 mv favicon-16x16.png favicon-16x16.png.orig
 mv favicon-32x32.png favicon-32x32.png.orig
 mv apple-touch-icon.png apple-touch-icon.png.orig
-cd /usr/share/webmin/authentic-theme/images/favicons/webmin/
+cd /usr/share/webmin/authentic-theme/images/favicons/webmin/ || exit
 mv favicon-16x16.png favicon-16x16.png.orig
 mv favicon-32x32.png favicon-32x32.png.orig
 mv apple-touch-icon.png apple-touch-icon.png.orig
@@ -233,7 +233,7 @@ printf '\nn\nn\ny\ny\ny\ny\n' | mariadb-secure-installation
 
 apt -y autoremove && apt -y autoclean
 
-cd /root
+cd /root || exit
 rm inst_logo_styles.sh
 rm virtualmin-install.log
 
@@ -382,15 +382,10 @@ function inst_geoip() {
     geoip-shell restore
     
     # Setup cron jobs
-    
-    #echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update" >> /var/spool/cron/crontabs/root
-    #echo ""
-    #echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence" >> /var/spool/cron/crontabs/root
 
     (crontab -l 2>/dev/null || true; echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update") | crontab -
     (crontab -l 2>/dev/null || true; echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence") | crontab -
 
-    
     rm -rf geoipconf.zip
 }
 
@@ -1238,7 +1233,6 @@ function inst_motd() {
     cd /root || exit
     echo "" >/etc/motd
     apt install figlet -y
-    #apt install boxes -y
     apt install lolcat -y
     cp /usr/games/lolcat /usr/local/bin/
 
@@ -1249,7 +1243,6 @@ hname=$(hostname | awk '{print $1}')
 hname=$(echo ${hname^^} | cut -d"." -f 1)
 echo -e " "
 echo -e " "
-# figlet -c -k -f big $hname | lolcat -f | boxes -d boy
 figlet -c -k -f big $hname | lolcat -f
 echo ""
 EOF
