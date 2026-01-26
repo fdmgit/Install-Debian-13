@@ -289,6 +289,7 @@ function inst_add_python() {
     apt install python3-venv -y
     apt install python3-pip -y
     apt install virtualenv -y
+    apt -install python3-systemd -y
 
 }
 
@@ -300,13 +301,11 @@ function inst_f2b() {
 
     cd /root || exit
 
-    git clone https://github.com/fail2ban/fail2ban.git
-    cd fail2ban || exit
-    python3 setup.py install
-    cd /root || exit
-    rm -r /root/fail2ban
-
-    apt -y install python3-systemd
+    #git clone https://github.com/fail2ban/fail2ban.git
+    #cd fail2ban || exit
+    #python3 setup.py install
+    #cd /root || exit
+    #rm -r /root/fail2ban
 
     wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/jail-deb13.local
     cd /etc/fail2ban || exit
@@ -321,8 +320,8 @@ allowipv6 = auto
 
 EOF
 
-    cp -av /usr/local/bin/fail2ban-* /usr/bin/
-    rm /usr/local/bin/fail2ban-*
+    #cp -av /usr/local/bin/fail2ban-* /usr/bin/
+    #rm /usr/local/bin/fail2ban-*
 
 }
 
