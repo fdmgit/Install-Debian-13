@@ -289,7 +289,7 @@ function inst_add_python() {
     apt install python3-venv -y
     apt install python3-pip -y
     apt install virtualenv -y
-    apt -install python3-systemd -y
+    apt install python3-systemd -y
 
 }
 
@@ -1013,7 +1013,7 @@ function post_inst() {
     } >>.bash_aliases
     cp .bash_aliases /etc/skel/.bash_aliases
     rm -R .spamassassin
-    rm inst_deb13_amd64.sh
+    rm inst_deb13_amd64_dev.sh
 
     ################################
     ### remove default apache2 files
