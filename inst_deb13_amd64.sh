@@ -307,9 +307,9 @@ function inst_f2b() {
     #rm fail2ban_newest.deb
 
     #git clone https://github.com/fail2ban/fail2ban.git
-    cd fail2ban || exit
+    #cd fail2ban || exit
     #python3 setup.py install
-    cd /root || exit
+    #cd /root || exit
     #rm -r /root/fail2ban
 
     apt -y install python3-systemd
