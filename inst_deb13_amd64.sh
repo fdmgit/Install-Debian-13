@@ -300,15 +300,11 @@ function inst_f2b() {
 
     cd /root || exit
 
-    #wget -O fail2ban_newest.deb  https://github.com/fail2ban/fail2ban/releases/download/1.1.0/fail2ban_1.1.0-1.upstream1_all.deb
-    #dpkg -i --force-confnew fail2ban_newest.deb
-    #rm fail2ban_newest.deb
-
-    #git clone https://github.com/fail2ban/fail2ban.git
-    #cd fail2ban || exit
-    #python3 setup.py install
-    #cd /root || exit
-    #rm -r /root/fail2ban
+    git clone https://github.com/fail2ban/fail2ban.git
+    cd fail2ban || exit
+    python3 setup.py install
+    cd /root || exit
+    rm -r /root/fail2ban
 
     apt -y install python3-systemd
 
@@ -325,8 +321,8 @@ allowipv6 = auto
 
 EOF
 
-    #cp -av /usr/local/bin/fail2ban-* /usr/bin/
-    #rm /usr/local/bin/fail2ban-*
+    cp -av /usr/local/bin/fail2ban-* /usr/bin/
+    rm /usr/local/bin/fail2ban-*
 
 }
 
