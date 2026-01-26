@@ -32,7 +32,7 @@ CYAN=$(echo -en '\001\033[00;36m\002')
 function print_header() {
     clear
     echo ""
-    echo -e "${YELLOW}     Welcome to the Debian 12 System installer!${NC}"
+    echo -e "${YELLOW}     Welcome to the Debian 13 System installer!${NC}"
     echo -e "${GREEN}"
     echo "     I need to ask you a few questions before starting the setup."
     echo ""
@@ -41,7 +41,7 @@ function print_header() {
 function print_conf() {
     clear
     echo ""
-    echo -e "${YELLOW}     Debian 12 System installer${NC}"
+    echo -e "${YELLOW}     Debian 13 System installer${NC}"
     echo -e "${GREEN}"
     echo "     Your input is:"
     echo ""
@@ -50,13 +50,13 @@ function print_conf() {
 function pre_inst_ssh() {
 
     cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/bashrc.ini
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/bashrc.ini
 
     cp bashrc.ini /root/.bashrc
     cp bashrc.ini /etc/skel/.bashrc
     rm /root/bashrc.ini
 
-    echo "deb http://deb.debian.org/debian/ bookworm-backports main" | tee -a /etc/apt/sources.list
+    #echo "deb http://deb.debian.org/debian/ bookworm-backports main" | tee -a /etc/apt/sources.list
 
     ###################################
     #### enable mouse support for nano
@@ -92,7 +92,7 @@ function pre_inst_ssh() {
         echo "file authorized_keys exists"
     else
         cd /root/.ssh || exit
-        wget https://raw.githubusercontent.com/fdmgit/virtualmin/main/authorized_keys
+        wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/authorized_keys
     fi
 
     ###################################
@@ -112,11 +112,23 @@ function pre_inst_ssh() {
     #### Restrict supported key exchange, cipher, and MAC algorithms
     echo -e "# Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com\n# hardening guide.\n\nKexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,gss-curve25519-sha256-,diffie-hellman-group16-sha512,gss-group16-sha512-,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256\n\nCiphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\n\nMACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com\n\nHostKeyAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nRequiredRSASize 3072\n\nCASignatureAlgorithms sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256\n\nGSSAPIKexAlgorithms gss-curve25519-sha256-,gss-group16-sha512-\n\nHostbasedAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-256\n\nPubkeyAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-256\n\n" >/etc/ssh/sshd_config.d/ssh-audit_hardening.conf
 
-    sed -i "s|\#Port 22|Port 49153|g" /etc/ssh/sshd_config
-    sed -i "s|\#LoginGraceTime 2m|LoginGraceTime 1m|g" /etc/ssh/sshd_config
-    sed -i "s|PermitRootLogin without-password|PermitRootLogin prohibit-password|g" /etc/ssh/sshd_config
-    sed -i "s|\#MaxAuthTries 6|MaxAuthTries 4|g" /etc/ssh/sshd_config
-    sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
+    #sed -i "s|\#Port 22|Port 49153|g" /etc/ssh/sshd_config
+    #sed -i "s|\#LoginGraceTime 2m|LoginGraceTime 1m|g" /etc/ssh/sshd_config
+    #sed -i "s|PermitRootLogin without-password|PermitRootLogin prohibit-password|g" /etc/ssh/sshd_config
+    #sed -i "s|\#MaxAuthTries 6|MaxAuthTries 4|g" /etc/ssh/sshd_config
+    #sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
+
+    cat >>/etc/ssh/sshd_config.d/sshd_hardening.conf <<'EOF'
+Port 49153
+LoginGraceTime 1m
+PermitRootLogin prohibit-password
+MaxAuthTries 4
+AllowTcpForwarding no
+X11Forwarding no
+AllowAgentForwarding no
+
+EOF
+
     sed -i "s|session    required     pam_env.so user_readenv=1 envfile=/etc/default/locale|session    required     pam_env.so envfile=/etc/default/locale|g" /etc/pam.d/sshd
     systemctl restart sshd
     sleep 5
@@ -128,7 +140,7 @@ function pre_inst_ssh() {
     cd /etc/skel || exit
     mkdir public_html
     cd public_html || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/index_web.php
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/index_web.php
     mv index_web.php index.php
     cd /root || exit
 }
@@ -160,21 +172,44 @@ function inst_logo_styles() {
 
     cat >>/root/inst_logo_styles.sh <<'EOF'
 
-wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/logostyle.zip
+wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/logostyle.zip
 unzip logostyle.zip
 cp logo.png /etc/webmin/authentic-theme/
 cp logo_welcome.png /etc/webmin/authentic-theme/
 cp styles.css /etc/webmin/authentic-theme/
+cd /usr/share/webmin/authentic-theme/images/favicons/virtualmin/ || exit
+mv favicon-16x16.png favicon-16x16.png.orig
+mv favicon-32x32.png favicon-32x32.png.orig
+mv apple-touch-icon.png apple-touch-icon.png.orig
+cd /usr/share/webmin/authentic-theme/images/favicons/webmin/ || exit
+mv favicon-16x16.png favicon-16x16.png.orig
+mv favicon-32x32.png favicon-32x32.png.orig
+mv apple-touch-icon.png apple-touch-icon.png.orig
+cd /root || exit
+cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+
 rm logo.png
 rm logo_welcome.png
 rm styles.css
+rm favicon*.png
+rm apple-touch-icon.png
 rm logostyle.zip
 
-cd //home/._hostname/public_html/ || exit
-wget -O index.html https://raw.githubusercontent.com/fdmgit/install-debian-12/main/index_web.php
+cd /home/._hostname/public_html/ || exit
+wget -O index.html https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/index_web.php
 sed  -i  "s|<?php echo \$_SERVER\['HTTP_HOST'\]; ?>|$(hostname)|g" index.html
-chown _default_hostname:_default_hostname index.html
+chown _hostname:_hostname index.html
 rm index.php
+
+hname=$(sed 's/\.*[^\.]*\.[^\.]*$//g'  <<< $(hostname))
+subdom=$(echo "$hname" | awk '{print toupper($0)}')
+sed -i "s/session_header=Login to Webmin/session_header=Login to $subdom/g" /usr/share/webmin/lang/en
+
 cd /root || exit
 
 ###################################
@@ -198,7 +233,7 @@ printf '\nn\nn\ny\ny\ny\ny\n' | mariadb-secure-installation
 
 apt -y autoremove && apt -y autoclean
 
-cd /root
+cd /root || exit
 rm inst_logo_styles.sh
 rm virtualmin-install.log
 
@@ -217,9 +252,9 @@ function inst_virtualmin_config() {
     ###################################
 
     cd /etc/webmin/virtual-server/plans || exit
-    wget https://raw.githubusercontent.com/fdmgit/virtualmin/main/160880314564582
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/1769190256443380
     cd /etc/webmin/virtual-server/templates || exit
-    wget https://raw.githubusercontent.com/fdmgit/virtualmin/main/server-level.tar.gz
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/server-level.tar.gz
     tar -xvzf server-level.tar.gz
     rm server-level.tar.gz
 
@@ -264,12 +299,6 @@ function inst_f2b() {
     ###################################
 
     cd /root || exit
-    apt install fail2ban
-    virtualmin-config-system -i=Fail2banFirewalld
-
-    #wget -O fail2ban_newest.deb  https://github.com/fail2ban/fail2ban/releases/download/1.1.0/fail2ban_1.1.0-1.upstream1_all.deb
-    #dpkg -i --force-confnew fail2ban_newest.deb
-    #rm fail2ban_newest.deb
 
     git clone https://github.com/fail2ban/fail2ban.git
     cd fail2ban || exit
@@ -279,11 +308,11 @@ function inst_f2b() {
 
     apt -y install python3-systemd
 
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/jail-deb12.local
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/jail-deb13.local
     cd /etc/fail2ban || exit
     mv jail.local jail.local.orig
-    cp /root/jail-deb12.local jail.local
-    rm /root/jail-deb12.local
+    cp /root/jail-deb13.local jail.local
+    rm /root/jail-deb13.local
     
     cat >>/etc/fail2ban/fail2ban.local <<'EOF'
 
@@ -292,7 +321,6 @@ allowipv6 = auto
 
 EOF
 
-    touch /var/log/auth.log
     cp -av /usr/local/bin/fail2ban-* /usr/bin/
     rm /usr/local/bin/fail2ban-*
 
@@ -303,9 +331,9 @@ function inst_firewalld_ipset() {
 
     systemctl stop firewalld
     cd /root
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/ipsetgen.sh
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/ipsetgen.sh
     chmod +x ipsetgen.sh
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/ipsetinst.sh
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/ipsetinst.sh
     chmod +x ipsetinst.sh
 
     source ./ipsetgen.sh
@@ -315,6 +343,50 @@ function inst_firewalld_ipset() {
     systemctl stop firewalld
     systemctl start firewalld
 
+}
+
+function inst_geoip() {
+
+    mkdir /root/geoip 
+    cd /root/geoip
+    # get geoip-shell source; newest release
+    curl -L "$(curl -s https://api.github.com/repos/friendly-bits/geoip-shell/releases | grep -m1 -o 'https://api.github.com/repos/friendly-bits/geoip-shell/tarball/[^"]*')" > geoip-shell.tar.gz
+    tar -zxvf geoip-shell.tar.gz
+    cd friendly*
+    mv * /root/geoip/
+    mv .* /root/geoip/
+    cd /root/geoip
+    rm -rf friendly*
+    rm geoip-shell.tar.gz
+
+    sh geoip-shell-install.sh -z
+
+    # copy files to configuration directory
+    mkdir /etc/geoip-shell/install
+    cd /etc/geoip-shell/install
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/geoipconf.zip
+    unzip geoipconf.zip
+    
+    #get WAN interface
+    all_ifaces="$([ -r "/proc/net/dev" ] && sed -n '/^[[:space:]]*[^[:space:]]*:/{s/^[[:space:]]*//;s/:.*//p}' < /proc/net/dev | grep -vx 'lo')"
+    sed -i "s/ifaces=/ifaces=$all_ifaces/g" geoip-shell.conf
+
+    cp /etc/geoip-shell/install/geoip-shell.conf /etc/geoip-shell/geoip-shell.conf
+    cp /etc/geoip-shell/install/setupdone /etc/geoip-shell/setupdone
+   
+    mkdir /tmp/geoip-shell-run
+    mkdir /tmp/geoip-shell-run/iplists
+    mkdir /tmp/geoip-shell-tmp
+    mkdir /tmp/geoip-shell-tmp/fetch
+    
+    geoip-shell restore
+    
+    # Setup cron jobs
+
+    (crontab -l 2>/dev/null || true; echo "15 4 * * * /usr/bin/geoip-shell-run.sh update -a 1>/dev/null 2>/dev/null # geoip-shell-update") | crontab -
+    (crontab -l 2>/dev/null || true; echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence") | crontab -
+
+    rm -rf geoipconf.zip
 }
 
 function inst_pwgen() {
@@ -327,6 +399,16 @@ function inst_pwgen() {
 
 }
 
+function inst_mc() {
+
+    #################################
+    #### Install Midnight Commander
+    #################################
+
+    apt update
+    apt install mc -y
+
+}
 
 function inst_smart_nvme() {
 
@@ -335,9 +417,7 @@ function inst_smart_nvme() {
     ######################################
 
     cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/install-debian-12/main/smartmontools_7.4-2~bpo12+1_amd64.deb
-    dpkg -i smartmontools_7.4-2~bpo12+1_amd64.deb
-    rm smartmontools_7.4-2~bpo12+1_amd64.deb
+    apt install smartmontools -y 
     apt install nvme-cli -y
 
 }
@@ -348,23 +428,27 @@ function inst_mariadb() {
     #### Install MariaDB Repository
     ##################################
 
-    curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
-
+    curl -o /usr/share/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
+    cd /usr/share/keyrings || exit
+    ln -s mariadb-keyring.pgp mariadb-keyring.gpg
     cd /etc/apt/sources.list.d || exit
-    touch mariadb.list
+    touch mariadb.sources
 
-    cat >>/etc/apt/sources.list.d/mariadb.list <<'EOF'
-
-# deb.mariadb.org is a dynamic mirror if your preferred mirror goes offline. See https://mariadb.org/mirrorbits/ for details.
-# deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://deb.mariadb.org/10.11/debian bookworm main
-
-deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirror.mva-n.net/mariadb/repo/10.11/debian bookworm main
-# deb-src [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirror.mva-n.net/mariadb/repo/10.11/debian bookworm main
+    cat >>/etc/apt/sources.list.d/mariadb.sources <<'EOF'
+Types: deb deb-src
+URIs: https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian
+Suites: trixie
+Components: main
+Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 
 EOF
 
-    apt update
-    echo "N" | apt upgrade -y
+    sed -i 's/\[mariadb-11.8\]/\[mariadb-11.8\]\n\nfeedback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+    systemctl restart mariadb
+    sleep 10
+
+    #apt update
+    #echo "N" | apt upgrade -y
     cd /etc/mysql/mariadb.conf.d || exit
     #ls provider*.cnf | xargs -I{} mv {} {}.orig
     find provider*.cnf -print0 | xargs -0 -I{} mv {} {}.orig
@@ -372,16 +456,6 @@ EOF
 
 }
 
-function inst_kernel() {
-
-    ##############################
-    #### Install new Linux Kernel
-    ##############################
-
-    apt install linux-image-6.12.30+bpo-amd64 -y
-    # apt install linux-headers-6.12.12+bpo-amd64 -y # development
-
-}
 
 function inst_sury_repo() {
 
@@ -389,14 +463,14 @@ function inst_sury_repo() {
     #### install new PHP versions
     ##############################
 
-    apt -y install lsb-release apt-transport-https ca-certificates
+    apt -y install lsb-release ca-certificates
 
     echo | curl -sSL https://packages.sury.org/apache2/README.txt | sudo bash -xe
  
     echo | curl -sSL https://packages.sury.org/php/README.txt | sudo bash -xe
     
     apt update
-    echo "N" | apt upgrade -y 
+    apt upgrade -y
 
 }
 
@@ -794,7 +868,75 @@ EOF
 
 }
 
-function enable_apache_mod() {
+function inst_php85() {
+
+
+    apt-get install php8.5-{bcmath,bz2,cgi,curl,dba,fpm,gd,gmp,igbinary,imagick,imap,intl,ldap,mbstring} -y
+    apt-get install php8.5-{mysql,odbc,opcache,pspell,readline,redis,soap,sqlite3,tidy,xml,xmlrpc,xsl,zip} -y
+
+    cat >>/etc/php/8.5/cgi/php.ini <<'EOF'
+
+[PHP]
+output_buffering = Off
+max_execution_time = 300
+max_input_time = 300
+memory_limit = 512M
+post_max_size = 1024M
+upload_max_filesize = 1024M
+date.timezone = Europe/Zurich
+max_input_vars = 10000
+[Session]
+session.gc_maxlifetime = 3600     
+[opcache]
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=256M
+
+EOF
+
+    cat >>/etc/php/8.5/cli/php.ini <<'EOF'
+
+[PHP]
+output_buffering = Off
+max_execution_time = 300
+max_input_time = 300
+memory_limit = 512M
+post_max_size = 1024M
+upload_max_filesize = 1024M
+date.timezone = Europe/Zurich
+max_input_vars = 10000
+[Session]
+session.gc_maxlifetime = 3600     
+[opcache]
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=256M
+
+EOF
+
+    cat >>/etc/php/8.5/fpm/php.ini <<'EOF'
+
+[PHP]
+output_buffering = Off
+max_execution_time = 300
+max_input_time = 300
+memory_limit = 512M
+post_max_size = 1024M
+upload_max_filesize = 1024M
+date.timezone = Europe/Zurich
+max_input_vars = 10000
+[Session]
+session.gc_maxlifetime = 3600     
+[opcache]
+opcache.enable=1
+opcache.enable_cli=1
+opcache.jit_buffer_size=256M
+
+EOF
+
+}
+
+function enable_apache_modules() {
 
     #####################################
     #### Enable additional Apache modules
@@ -807,6 +949,17 @@ function enable_apache_mod() {
     a2enmod proxy_http2
 
 }
+
+function inst_wsgi_apache_module() {
+
+    #####################################
+    #### Install WSGI Apache module
+    #####################################
+
+    apt install libapache2-mod-wsgi-py3 -y
+
+}
+
 
 function dis_services() {
 
@@ -825,10 +978,26 @@ function dis_services() {
 
 }
 
+function inst_iliascripts() {
+
+    ##############################
+    #### ILIAS Scripts
+    ##############################
+
+    cd /usr/local/bin || exit
+    wget -O apache-log-stats https://raw.githubusercontent.com/iliaross/script-stash/refs/heads/main/bash/apache-log-stats.bash
+    wget -O net-ip-lookup https://raw.githubusercontent.com/iliaross/script-stash/refs/heads/main/perl/net-ip-lookup.pl
+    wget -O apache-check-vhosts https://raw.githubusercontent.com/iliaross/script-stash/refs/heads/main/perl/apache-check-vhosts.pl
+    chmod +x apache-log-stats
+    chmod +x net-ip-lookup
+    chmod +x apache-check-vhosts    
+
+}
+
 function post_inst() {
 
     ##############################
-    #### Update locate DB
+    #### Update .bash_aliases
     ##############################
 
     cd /root || exit
@@ -838,10 +1007,14 @@ function post_inst() {
         echo "alias gc='gat'"
         echo "alias ed=nano"
         echo "alias hh=hstr"
+        echo "alias apt='PAGER= apt'"
+        echo "alias apache-stats='apache-log-stats'"
+        echo "alias iplookup='net-ip-lookup'"
+        echo "alias check-vhosts='apache-check-vhosts'"
     } >>.bash_aliases
     cp .bash_aliases /etc/skel/.bash_aliases
     rm -R .spamassassin
-    rm inst_deb12_amd64.sh
+    rm inst_deb13_amd64.sh
 
     ################################
     ### remove default apache2 files
@@ -870,12 +1043,16 @@ function inst_virtualmin() {
 
     ##### testing
     #wget -O virtualmin-install.sh https://raw.githubusercontent.com/virtualmin/virtualmin-install/master/virtualmin-install.sh
-    #yes | sh virtualmin-install.sh --type mini  #  < full | mini >
+    #yes | sh virtualmin-install.sh --type mini  --branch prerelease #  < full | mini >
+    #yes | sh virtualmin-install.sh --type mini  --branch rc #  < full | mini >    
     
     ##### production
-    wget -O virtualmin-install.sh https://software.virtualmin.com/gpl/scripts/virtualmin-install.sh
-    yes | sh virtualmin-install.sh --minimal #  < full | mini >
-    #sh virtualmin-install.sh  -y
+    wget -O virtualmin-install.sh https://download.virtualmin.com/virtualmin-install.sh
+    yes | sh virtualmin-install.sh --type mini   --branch stable #  < full | mini >
+
+    #############################################
+    #### Install fail2ban and configure firewalld
+    #############################################
     apt install fail2ban -y
     virtualmin-config-system -i=Fail2banFirewalld
     rm virtualmin-install.sh
@@ -889,7 +1066,7 @@ function inst_gat() {
     ###################################
 
     cd /usr/local/bin || exit
-    wget https://github.com/koki-develop/gat/releases/download/v0.25.2/gat_Linux_x86_64.tar.gz
+    wget https://github.com/koki-develop/gat/releases/download/v0.26.0/gat_Linux_x86_64.tar.gz
     tar -xvzf gat_Linux_x86_64.tar.gz
     chown root:root gat
     chmod +x gat
@@ -906,24 +1083,32 @@ function inst_jos() {
     ###################################
 
     cd /usr/local/bin || exit
-    wget https://github.com/kamiyaa/joshuto/releases/download/v0.9.8/joshuto-v0.9.8-x86_64-unknown-linux-musl.tar.gz
-    tar -vxzf joshuto-v0.9.8-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin --strip-components=1
+    wget https://github.com/kamiyaa/joshuto/releases/download/v0.9.9/joshuto-v0.9.9-x86_64-unknown-linux-musl.tar.gz
+    tar -vxzf joshuto-v0.9.9-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin --strip-components=1
     chown root:root joshuto
-    rm joshuto-v0.9.8-x86_64-unknown-linux-musl.tar.gz
+    rm joshuto-v0.9.9-x86_64-unknown-linux-musl.tar.gz
 }
 
 function inst_base() {
 
     ###################################
-    #### Install Debian 12 Base
+    #### Install Debian 13 Base
     ###################################
     apt update
     apt upgrade -y
-    apt install plocate sntp ntpdate software-properties-common curl imagemagick -y
+    #apt install plocate sntp ntpdate software-properties-common curl imagemagick -y
+    apt install plocate curl apt-transport-https imagemagick -y
     timedatectl set-timezone Europe/Zurich
 
     hostnamectl set-hostname "$fqdn"  # set hostname
     echo "root:${rpasswd}" | chpasswd # set root password -
+
+    ###################################
+    #### create log files for fail2ban
+    ###################################
+    touch /var/log/auth.log
+    touch /var/log/syslog
+
 
 }
 
@@ -1048,7 +1233,6 @@ function inst_motd() {
     cd /root || exit
     echo "" >/etc/motd
     apt install figlet -y
-    apt install boxes -y
     apt install lolcat -y
     cp /usr/games/lolcat /usr/local/bin/
 
@@ -1059,13 +1243,13 @@ hname=$(hostname | awk '{print $1}')
 hname=$(echo ${hname^^} | cut -d"." -f 1)
 echo -e " "
 echo -e " "
-# figlet -c -k -f big $hname | lolcat -f | boxes -d boy
 figlet -c -k -f big $hname | lolcat -f
 echo ""
 EOF
 
     chmod +x /etc/update-motd.d/10-header
-
+    mv /etc/update-motd.d/10-uname /etc/update-motd.d/20-uname
+    sed -i "s|uname -snrvm|uname -snv|g" /etc/update-motd.d/20-uname    
 }
 
 function inst_hstr() {
@@ -1153,26 +1337,31 @@ inst_virtualmin        # function
 inst_add_python        # function
 dis_services           # function
 inst_sury_repo         # function
-inst_php74             # function
-inst_php80             # function
-inst_php81             # function
+#inst_php74             # function
+#inst_php80             # function
+#inst_php81             # function
 inst_php82             # function
 inst_php83             # function
 inst_php84             # function
-enable_apache_mod      # function
+#inst_php85             # function
+enable_apache_modules  # function
+inst_wsgi_apache_module # function
 inst_redis             # function
 inst_virtualmin_config # function
 inst_pwgen             # function
-#inst_kernel            # function
-inst_mariadb           # function
-inst_bip               # function
+#inst_mc                # function
+#inst_mariadb           # function
+#inst_bip               # function
+inst_iliascripts       # function
 post_inst              # function
 inst_motd              # function
 inst_composer          # function
 inst_f2b               # function
-enh_nft                # function
+#enh_nft                # function
 inst_logo_styles       # function
-inst_firewalld_ipset   # function
+#inst_firewalld_ipset   # function
+inst_geoip             # function
+inst_mariadb           # function
 closing_msg            # function
 
 reboot
