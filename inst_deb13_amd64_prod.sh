@@ -700,7 +700,7 @@ hname=$(hostname | awk '{print $1}')
 hname=$(echo ${hname^^} | cut -d"." -f 1)
 echo -e " "
 echo -e " "
-figlet -c -k -f big $hname | lolcat -f
+figlet -c -k -w 90 -f big $hname | lolcat -f
 echo ""
 EOF
 
