@@ -9,7 +9,7 @@ wget https://raw.githubusercontent.com/fdmgit/install-debian-13/main/inst_deb13_
 To Install AMD64 production version (stable) use:
 
 ```
-wget -O inst_deb13_amd64 https://raw.githubusercontent.com/fdmgit/install-debian-13/main/inst_deb13_amd64_prod.sh && bash inst_deb13_amd64.sh
+wget -O inst_deb13_amd64.sh https://raw.githubusercontent.com/fdmgit/install-debian-13/main/inst_deb13_amd64_prod.sh && bash inst_deb13_amd64.sh
 ```
 
 To Install AMD64 version (UNSTABLE) use:
