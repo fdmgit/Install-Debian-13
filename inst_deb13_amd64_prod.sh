@@ -507,7 +507,7 @@ function inst_php85() {
 
 
     apt-get install php8.5-{bcmath,bz2,cgi,curl,dba,fpm,gd,gmp,igbinary,imagick,imap,intl,ldap,mbstring} -y
-    apt-get install php8.5-{mysql,odbc,opcache,pspell,readline,redis,soap,sqlite3,tidy,xml,xmlrpc,xsl,zip} -y
+    apt-get install php8.5-{mysql,odbc,pspell,readline,redis,soap,sqlite3,tidy,xml,xmlrpc,xsl,zip} -y
 
     cat >>/etc/php/8.5/cgi/php.ini <<'EOF'
 
