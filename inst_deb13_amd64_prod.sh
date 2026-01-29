@@ -777,6 +777,10 @@ cd /usr/share/webmin/authentic-theme/images/favicons/webmin/ || exit
 mv favicon-16x16.png favicon-16x16.png.orig
 mv favicon-32x32.png favicon-32x32.png.orig
 mv apple-touch-icon.png apple-touch-icon.png.orig
+cd /usr/share/webmin/authentic-theme/images/favicons/usermin/ || exit
+mv favicon-16x16.png favicon-16x16.png.orig
+mv favicon-32x32.png favicon-32x32.png.orig
+mv apple-touch-icon.png apple-touch-icon.png.orig
 cd /root || exit
 cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
 cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
@@ -784,6 +788,9 @@ cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/virtua
 cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
 cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
 cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
+cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
+cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
 
 rm logo.png
 rm logo_welcome.png
