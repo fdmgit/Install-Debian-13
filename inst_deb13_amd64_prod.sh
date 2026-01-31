@@ -872,21 +872,15 @@ function inst_geoip() {
 
     cp /etc/geoip-shell/install/geoip-shell.conf /etc/geoip-shell/geoip-shell.conf
     cp /etc/geoip-shell/install/setupdone /etc/geoip-shell/setupdone
-    
-    if [ -d "/var/lib/geoip-shell/local_iplists" ]; then
-        echo ""
-    else
-        mkdir /var/lib/geoip-shell/local_iplists
-    fi
-    cp /etc/geoip-shell/install/local_block_ipv4.net /var/lib/geoip-shell/local_iplists/local_block_ipv4.net
-
-   
+       
     mkdir /tmp/geoip-shell-run
     mkdir /tmp/geoip-shell-run/iplists
     mkdir /tmp/geoip-shell-tmp
     mkdir /tmp/geoip-shell-tmp/fetch
     
     geoip-shell restore
+
+    geoip-shell configure -B "/etc/geoip-Shell/install/local_block_ipv4.net
     
     # Setup cron jobs
 
