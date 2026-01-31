@@ -936,8 +936,8 @@ if [ $IPDETECT -eq 0 ] ; then
     exit
 fi
 
-echo $BANIPADDR >> /etc/geoip-status/install/local_block_ipv4.net
-geoip-shell configure -B "/etc/geoip-Shell/install/local_block_ipv4.net
+echo $BANIPADDR >> /etc/geoip-shell/install/local_block_ipv4.net
+geoip-shell configure -B "/etc/geoip-shell/install/local_block_ipv4.net"
 
 echo -e ""
 echo -e "${GREEN}      IP Addr || subnet blocked permanently${NC}"
