@@ -890,6 +890,65 @@ function inst_geoip() {
     rm -rf geoipconf.zip
 }
 
+function inst_bip() {
+
+    ###################################
+    #### add some BIP tool
+    ###################################
+
+    cat >>/usr/local/bin/bip <<'EOF'
+
+#!/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
+if [ -z  "$1" ]
+ then
+   echo -e ""
+   echo -e "${RED}      Missing input. Enter IP Addr || Subnet !${NC}"
+   echo -e "${RED}      Usage: bip <ipaddr || ip subnet>${NC}"
+   echo -e ""
+   exit
+else
+   BANIPADDR=$1
+fi
+
+IPDETECT=0
+
+if [[ "$BANIPADDR" =~ ^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$ ]]; then
+    IPDETECT=1
+fi
+
+if [[ "$BANIPADDR" =~ ^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([1-9]|[12][0-9]|3[0-2])$ ]]; then
+    IPDETECT=1
+fi
+
+if [ $IPDETECT -eq 0 ] ; then
+    clear
+    echo ""
+    echo ""
+    echo -e "${RED}      The IP Address or Subnet ${YELLOW}${BANIPADDR}${RED} is wrong. Enter IP address / subnet again${NC}" 
+    echo ""
+    echo ""
+    exit
+fi
+
+echo $BANIPADDR >> /etc/geoip-status/install/local_block_ipv4.net
+geoip-shell configure -B "/etc/geoip-Shell/install/local_block_ipv4.net
+
+echo -e ""
+echo -e "${GREEN}      IP Addr || subnet blocked permanently${NC}"
+echo -e ""
+
+EOF
+
+    chmod +x /usr/local/bin/bip
+
+}
+
 function inst_mariadb() {
 
     ##################################
@@ -1043,6 +1102,7 @@ inst_composer            # function
 inst_f2b                 # function
 inst_logo_styles         # function
 inst_geoip               # function
+inst_bip                 # function
 inst_mariadb             # function
 closing_msg              # function
 
