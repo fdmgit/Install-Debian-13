@@ -876,9 +876,9 @@ function inst_geoip() {
     if [ -d "/var/lib/geoip-shell/local_iplists" ]; then
         echo ""
     else
-        mkdir /var/lib/geoip_iplists
+        mkdir /var/lib/geoip-shell/local_iplists
     fi
-    cp /etc/geoip-shell/install/local_block_ipv4.net /var/lib/geoip_iplists/local_block_ipv4.net
+    cp /etc/geoip-shell/install/local_block_ipv4.net /var/lib/geoip-shell/local_iplists/local_block_ipv4.net
 
    
     mkdir /tmp/geoip-shell-run
