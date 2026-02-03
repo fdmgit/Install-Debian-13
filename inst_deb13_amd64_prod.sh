@@ -888,6 +888,7 @@ function inst_geoip() {
     (crontab -l 2>/dev/null || true; echo "@reboot /usr/bin/geoip-shell-run.sh restore -a 1>/dev/null 2>/dev/null # geoip-shell-persistence") | crontab -
 
     rm -rf geoipconf.zip
+    rm -rf /root/geoip
 }
 
 function inst_bip() {
