@@ -847,14 +847,14 @@ EOF
 function inst_geoip() {
 
     mkdir /root/geoip 
-    cd /root/geoip
+    cd /root/geoip || exit
     # get geoip-shell source; newest release
     curl -L "$(curl -s https://api.github.com/repos/friendly-bits/geoip-shell/releases | grep -m1 -o 'https://api.github.com/repos/friendly-bits/geoip-shell/tarball/[^"]*')" > geoip-shell.tar.gz
     tar -zxvf geoip-shell.tar.gz
-    cd friendly*
+    cd friendly* || exit
     mv * /root/geoip/
     mv .* /root/geoip/
-    cd /root/geoip
+    cd /root/geoip || exit
     rm -rf friendly*
     rm geoip-shell.tar.gz
 
@@ -862,7 +862,7 @@ function inst_geoip() {
 
     # copy files to configuration directory
     mkdir /etc/geoip-shell/install
-    cd /etc/geoip-shell/install
+    cd /etc/geoip-shell/install || exit
     wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/geoipconf.zip
     unzip geoipconf.zip
     
