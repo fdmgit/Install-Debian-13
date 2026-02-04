@@ -511,63 +511,63 @@ function inst_php85() {
 
     cat >>/etc/php/8.5/cgi/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+ [PHP]
+ output_buffering = Off
+ max_execution_time = 300
+ max_input_time = 300
+ memory_limit = 512M
+ post_max_size = 1024M
+ upload_max_filesize = 1024M
+ date.timezone = Europe/Zurich
+ max_input_vars = 10000
+ [Session]
+ session.gc_maxlifetime = 3600     
+ [opcache]
+ opcache.enable=1
+ opcache.enable_cli=1
+ opcache.jit_buffer_size=256M
 
-EOF
+ EOF
 
     cat >>/etc/php/8.5/cli/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+ [PHP]
+ output_buffering = Off
+ max_execution_time = 300
+ max_input_time = 300
+ memory_limit = 512M
+ post_max_size = 1024M
+ upload_max_filesize = 1024M
+ date.timezone = Europe/Zurich
+ max_input_vars = 10000
+ [Session]
+ session.gc_maxlifetime = 3600     
+ [opcache]
+ opcache.enable=1
+ opcache.enable_cli=1
+ opcache.jit_buffer_size=256M
 
-EOF
+ EOF
 
     cat >>/etc/php/8.5/fpm/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+ [PHP]
+ output_buffering = Off
+ max_execution_time = 300
+ max_input_time = 300
+ memory_limit = 512M
+ post_max_size = 1024M
+ upload_max_filesize = 1024M
+ date.timezone = Europe/Zurich
+ max_input_vars = 10000
+ [Session]
+ session.gc_maxlifetime = 3600     
+ [opcache]
+ opcache.enable=1
+ opcache.enable_cli=1
+ opcache.jit_buffer_size=256M
 
-EOF
+ EOF
 
 }
 
@@ -608,9 +608,9 @@ function inst_redis() {
 
     cat >>/etc/sysctl.conf <<'EOF'
 
-vm.overcommit_memory = 1
+ vm.overcommit_memory = 1
 
-EOF
+ EOF
 
 }
 
@@ -694,15 +694,15 @@ function inst_motd() {
     cp /usr/games/lolcat /usr/local/bin/
 
     cat >>/etc/update-motd.d/10-header <<'EOF'
-#!/bin/bash
+ #!/bin/bash
 
-hname=$(hostname | awk '{print $1}')
-hname=$(echo ${hname^^} | cut -d"." -f 1)
-echo -e " "
-echo -e " "
-figlet -c -k -w 90 -f big $hname | lolcat -f
-echo ""
-EOF
+ hname=$(hostname | awk '{print $1}')
+ hname=$(echo ${hname^^} | cut -d"." -f 1)
+ echo -e " "
+ echo -e " "
+ figlet -c -k -w 90 -f big $hname | lolcat -f
+ echo ""
+ EOF
 
     chmod +x /etc/update-motd.d/10-header
     mv /etc/update-motd.d/10-uname /etc/update-motd.d/20-uname
@@ -744,10 +744,10 @@ function inst_f2b() {
     
     cat >>/etc/fail2ban/fail2ban.local <<'EOF'
 
-[Definition]
-allowipv6 = auto
+ [Definition]
+ allowipv6 = auto
 
-EOF
+ EOF
 
     #cp -av /usr/local/bin/fail2ban-* /usr/bin/
     #rm /usr/local/bin/fail2ban-*
@@ -764,81 +764,81 @@ function inst_logo_styles() {
 
     cat >>/root/inst_logo_styles.sh <<'EOF'
 
-wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/logostyle.zip
-unzip logostyle.zip
-cp logo.png /etc/webmin/authentic-theme/
-cp logo_welcome.png /etc/webmin/authentic-theme/
-cp styles.css /etc/webmin/authentic-theme/
-cd /usr/share/webmin/authentic-theme/images/favicons/virtualmin/ || exit
-mv favicon-16x16.png favicon-16x16.png.orig
-mv favicon-32x32.png favicon-32x32.png.orig
-mv apple-touch-icon.png apple-touch-icon.png.orig
-cd /usr/share/webmin/authentic-theme/images/favicons/webmin/ || exit
-mv favicon-16x16.png favicon-16x16.png.orig
-mv favicon-32x32.png favicon-32x32.png.orig
-mv apple-touch-icon.png apple-touch-icon.png.orig
-cd /usr/share/webmin/authentic-theme/images/favicons/usermin/ || exit
-mv favicon-16x16.png favicon-16x16.png.orig
-mv favicon-32x32.png favicon-32x32.png.orig
-mv apple-touch-icon.png apple-touch-icon.png.orig
-cd /root || exit
-cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
-cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
-cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
-cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
-cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
-cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
-cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
-cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
-cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
+ wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/logostyle.zip
+ unzip logostyle.zip
+ cp logo.png /etc/webmin/authentic-theme/
+ cp logo_welcome.png /etc/webmin/authentic-theme/
+ cp styles.css /etc/webmin/authentic-theme/
+ cd /usr/share/webmin/authentic-theme/images/favicons/virtualmin/ || exit
+ mv favicon-16x16.png favicon-16x16.png.orig
+ mv favicon-32x32.png favicon-32x32.png.orig
+ mv apple-touch-icon.png apple-touch-icon.png.orig
+ cd /usr/share/webmin/authentic-theme/images/favicons/webmin/ || exit
+ mv favicon-16x16.png favicon-16x16.png.orig
+ mv favicon-32x32.png favicon-32x32.png.orig
+ mv apple-touch-icon.png apple-touch-icon.png.orig
+ cd /usr/share/webmin/authentic-theme/images/favicons/usermin/ || exit
+ mv favicon-16x16.png favicon-16x16.png.orig
+ mv favicon-32x32.png favicon-32x32.png.orig
+ mv apple-touch-icon.png apple-touch-icon.png.orig
+ cd /root || exit
+ cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+ cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+ cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/virtualmin/
+ cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+ cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+ cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/webmin/
+ cp favicon-16x16.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
+ cp favicon-32x32.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
+ cp apple-touch-icon.png /usr/share/webmin/authentic-theme/images/favicons/usermin/
 
-rm logo.png
-rm logo_welcome.png
-rm styles.css
-rm favicon*.png
-rm apple-touch-icon.png
-rm logostyle.zip
+ rm logo.png
+ rm logo_welcome.png
+ rm styles.css
+ rm favicon*.png
+ rm apple-touch-icon.png
+ rm logostyle.zip
 
-cd /home/._hostname/public_html/ || exit
-wget -O index.html https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/index_web.php
-sed  -i  "s|<?php echo \$_SERVER\['HTTP_HOST'\]; ?>|$(hostname)|g" index.html
-chown _hostname:_hostname index.html
-rm index.php
+ cd /home/._hostname/public_html/ || exit
+ wget -O index.html https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/index_web.php
+ sed  -i  "s|<?php echo \$_SERVER\['HTTP_HOST'\]; ?>|$(hostname)|g" index.html
+ chown _hostname:_hostname index.html
+ rm index.php
 
-hname=$(sed 's/\.*[^\.]*\.[^\.]*$//g'  <<< $(hostname))
-subdom=$(echo "$hname" | awk '{print toupper($0)}')
-sed -i "s/session_header=Login to Webmin/session_header=Login to $subdom/g" /usr/share/webmin/lang/en
+ hname=$(sed 's/\.*[^\.]*\.[^\.]*$//g'  <<< $(hostname))
+ subdom=$(echo "$hname" | awk '{print toupper($0)}')
+ sed -i "s/session_header=Login to Webmin/session_header=Login to $subdom/g" /usr/share/webmin/lang/en
 
-cd /root || exit
+ cd /root || exit
 
-###################################
-#### remove bind9, dovecot 
-###################################
+ ###################################
+ #### remove bind9, dovecot 
+ ###################################
 
-systemctl stop named
-systemctl disable named
+ systemctl stop named
+ systemctl disable named
 
-apt -y purge bind9
-apt -y purge bind9-utils
-apt -y purge dns-root-data
-rm -r /var/cache/bind/
-rm /etc/apparmor.d/local/*
-apt purge procmail procmail-wrapper -y
-apt purge dovecot-core dovecot-imapd dovecot-pop3d -y
-rm -r /var/lib/dovecot/
-rm -r /etc/dovecot/
+ apt -y purge bind9
+ apt -y purge bind9-utils
+ apt -y purge dns-root-data
+ rm -r /var/cache/bind/
+ rm /etc/apparmor.d/local/*
+ apt purge procmail procmail-wrapper -y
+ apt purge dovecot-core dovecot-imapd dovecot-pop3d -y
+ rm -r /var/lib/dovecot/
+ rm -r /etc/dovecot/
 
-printf '\nn\nn\ny\ny\ny\ny\n' | mariadb-secure-installation
+ printf '\nn\nn\ny\ny\ny\ny\n' | mariadb-secure-installation
 
-apt -y autoremove && apt -y autoclean
+ apt -y autoremove && apt -y autoclean
 
-cd /root || exit
-rm inst_logo_styles.sh
-rm virtualmin-install.log
+ cd /root || exit
+ rm inst_logo_styles.sh
+ rm virtualmin-install.log
 
-reboot
+ reboot
 
-EOF
+ EOF
 
     chmod +x /root/inst_logo_styles.sh
 
@@ -899,52 +899,52 @@ function inst_bip() {
 
     cat >>/usr/local/bin/bip <<'EOF'
 
-#!/bin/bash
+ #!/bin/bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-NC='\033[0m'
+ RED='\033[0;31m'
+ GREEN='\033[0;32m'
+ YELLOW='\033[0;33m'
+ NC='\033[0m'
 
-if [ -z  "$1" ]
- then
-   echo -e ""
-   echo -e "${RED}      Missing input. Enter IP Addr || Subnet !${NC}"
-   echo -e "${RED}      Usage: bip <ipaddr || ip subnet>${NC}"
-   echo -e ""
-   exit
-else
-   BANIPADDR=$1
-fi
-
-IPDETECT=0
-
-if [[ "$BANIPADDR" =~ ^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$ ]]; then
-    IPDETECT=1
-fi
-
-if [[ "$BANIPADDR" =~ ^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([1-9]|[12][0-9]|3[0-2])$ ]]; then
-    IPDETECT=1
-fi
-
-if [ $IPDETECT -eq 0 ] ; then
-    clear
-    echo ""
-    echo ""
-    echo -e "${RED}      The IP Address or Subnet ${YELLOW}${BANIPADDR}${RED} is wrong. Enter IP address / subnet again${NC}" 
-    echo ""
-    echo ""
+ if [ -z  "$1" ]
+  then
+    echo -e ""
+    echo -e "${RED}      Missing input. Enter IP Addr || Subnet !${NC}"
+    echo -e "${RED}      Usage: bip <ipaddr || ip subnet>${NC}"
+    echo -e ""
     exit
-fi
+ else
+    BANIPADDR=$1
+ fi
 
-echo $BANIPADDR >> /etc/geoip-shell/install/local_block_ipv4.net
-geoip-shell configure -B "/etc/geoip-shell/install/local_block_ipv4.net"
+ IPDETECT=0
 
-echo -e ""
-echo -e "${GREEN}      IP Addr || subnet blocked permanently${NC}"
-echo -e ""
+ if [[ "$BANIPADDR" =~ ^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$ ]]; then
+     IPDETECT=1
+ fi
 
-EOF
+ if [[ "$BANIPADDR" =~ ^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([1-9]|[12][0-9]|3[0-2])$ ]]; then
+     IPDETECT=1
+ fi
+
+ if [ $IPDETECT -eq 0 ] ; then
+     clear
+     echo ""
+     echo ""
+     echo -e "${RED}      The IP Address or Subnet ${YELLOW}${BANIPADDR}${RED} is wrong. Enter IP address / subnet again${NC}" 
+     echo ""
+     echo ""
+     exit
+ fi
+
+ echo $BANIPADDR >> /etc/geoip-shell/install/local_block_ipv4.net
+ geoip-shell configure -B "/etc/geoip-shell/install/local_block_ipv4.net"
+
+ echo -e ""
+ echo -e "${GREEN}      IP Addr || subnet blocked permanently${NC}"
+ echo -e ""
+
+ EOF
 
     chmod +x /usr/local/bin/bip
 
@@ -963,13 +963,13 @@ function inst_mariadb() {
     touch mariadb.sources
 
     cat >>/etc/apt/sources.list.d/mariadb.sources <<'EOF'
-Types: deb deb-src
-URIs: https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian
-Suites: trixie
-Components: main
-Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
+ Types: deb deb-src
+ URIs: https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian
+ Suites: trixie
+ Components: main
+ Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 
-EOF
+ EOF
 
     sed -i 's/\[mariadb-11.8\]/\[mariadb-11.8\]\n\nfeedback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     systemctl restart mariadb
