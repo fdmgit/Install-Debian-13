@@ -101,15 +101,15 @@ function pre_inst_ssh() {
     #sed -i "s|X11Forwarding yes|X11Forwarding no|g" /etc/ssh/sshd_config
 
     cat >>/etc/ssh/sshd_config.d/sshd_hardening.conf <<'EOF'
-Port 49153
-LoginGraceTime 1m
-PermitRootLogin prohibit-password
-MaxAuthTries 4
-AllowTcpForwarding no
-X11Forwarding no
-AllowAgentForwarding no
+ Port 49153
+ LoginGraceTime 1m
+ PermitRootLogin prohibit-password
+ MaxAuthTries 4
+ AllowTcpForwarding no
+ X11Forwarding no
+ AllowAgentForwarding no
 
-EOF
+ EOF
 
     sed -i "s|session    required     pam_env.so user_readenv=1 envfile=/etc/default/locale|session    required     pam_env.so envfile=/etc/default/locale|g" /etc/pam.d/sshd
     systemctl restart sshd
@@ -307,63 +307,63 @@ function inst_php82() {
 
     cat >>/etc/php/8.2/fpm/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
     cat >>/etc/php/8.2/cgi/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
     cat >>/etc/php/8.2/cli/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
 }
 
@@ -375,63 +375,63 @@ function inst_php83() {
 
     cat >>/etc/php/8.3/cgi/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
     cat >>/etc/php/8.3/cli/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
     cat >>/etc/php/8.3/fpm/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
 }
 
@@ -443,63 +443,63 @@ function inst_php84() {
 
     cat >>/etc/php/8.4/cgi/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
     cat >>/etc/php/8.4/cli/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
     cat >>/etc/php/8.4/fpm/php.ini <<'EOF'
 
-[PHP]
-output_buffering = Off
-max_execution_time = 300
-max_input_time = 300
-memory_limit = 512M
-post_max_size = 1024M
-upload_max_filesize = 1024M
-date.timezone = Europe/Zurich
-max_input_vars = 10000
-[Session]
-session.gc_maxlifetime = 3600     
-[opcache]
-opcache.enable=1
-opcache.enable_cli=1
-opcache.jit_buffer_size=256M
+	[PHP]
+	output_buffering = Off
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 512M
+	post_max_size = 1024M
+	upload_max_filesize = 1024M
+	date.timezone = Europe/Zurich
+	max_input_vars = 10000
+	[Session]
+	session.gc_maxlifetime = 3600     
+	[opcache]
+	opcache.enable=1
+	opcache.enable_cli=1
+	opcache.jit_buffer_size=256M
 
-EOF
+	EOF
 
 }
 
