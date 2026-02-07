@@ -963,21 +963,21 @@ function inst_mariadb() {
     cd /etc/apt/sources.list.d || exit
     touch mariadb.sources
 
-### new version -- test !
-#  cat >>/etc/apt/sources.list.d/mariadb.sources <<'EOF'
-# Types: deb deb-src
-# URIs: https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian
-# Suites: trixie
-# Components: main
-# Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
+### new version
+  cat >>/etc/apt/sources.list.d/mariadb.sources <<'EOF'
+Types: deb deb-src
+URIs: https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian
+Suites: trixie
+Components: main
+Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 
-#EOF
+EOF
 
 ### this version might be depreciated soon !
-    cat >>/etc/apt/sources.list.d/mariadb.list <<'EOF'
-deb [signed-by=/usr/share/keyrings/mariadb-keyring.gpg] https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian/ trixie main 
+#    cat >>/etc/apt/sources.list.d/mariadb.list <<'EOF'
+#deb [signed-by=/usr/share/keyrings/mariadb-keyring.gpg] https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian/ trixie main 
  
-EOF
+#EOF
 
     sed -i 's/\[mariadb-11.8\]/\[mariadb-11.8\]\n\nfeedback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     systemctl restart mariadb
