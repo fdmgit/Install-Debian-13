@@ -971,6 +971,11 @@ function inst_mariadb() {
 
 EOF
 
+    cat >>/etc/apt/sources.list.d/mariadb.list <<'EOF'
+ deb [signed-by=/usr/share/keyrings/mariadb-keyring.gpg] https://dlm.mariadb.com/repo/mariadb-server/11.rolling/repo/debian/ trixie main 
+ 
+EOF
+
     sed -i 's/\[mariadb-11.8\]/\[mariadb-11.8\]\n\nfeedback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     systemctl restart mariadb
     sleep 10
