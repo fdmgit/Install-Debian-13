@@ -694,14 +694,15 @@ function inst_motd() {
     cp /usr/games/lolcat /usr/local/bin/
 
     cat >>/etc/update-motd.d/10-header <<'EOF'
- #!/bin/bash
+#!/bin/bash
 
- hname=$(hostname | awk '{print $1}')
- hname=$(echo ${hname^^} | cut -d"." -f 1)
- echo -e " "
- echo -e " "
- figlet -c -k -w 90 -f big $hname | lolcat -f
- echo ""
+hname=$(hostname | awk '{print $1}')
+hname=$(echo ${hname^^} | cut -d"." -f 1)
+echo -e " "
+echo -e " "
+figlet -c -k -w 90 -f big $hname | lolcat -f
+echo ""
+
 EOF
 
     chmod +x /etc/update-motd.d/10-header
