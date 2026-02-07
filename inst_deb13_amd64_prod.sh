@@ -702,7 +702,7 @@ function inst_motd() {
  echo -e " "
  figlet -c -k -w 90 -f big $hname | lolcat -f
  echo ""
- EOF
+EOF
 
     chmod +x /etc/update-motd.d/10-header
     mv /etc/update-motd.d/10-uname /etc/update-motd.d/20-uname
