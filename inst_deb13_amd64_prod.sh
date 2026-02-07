@@ -662,6 +662,7 @@ function post_inst() {
         echo "alias apache-stats='apache-log-stats'"
         echo "alias iplookup='net-ip-lookup'"
         echo "alias check-vhosts='apache-check-vhosts'"
+        echo "alias {loc,locate}='plocate'"
     } >>.bash_aliases
     cp .bash_aliases /etc/skel/.bash_aliases
     rm -R .spamassassin
