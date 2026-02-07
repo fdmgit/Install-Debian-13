@@ -109,7 +109,7 @@ function pre_inst_ssh() {
  X11Forwarding no
  AllowAgentForwarding no
 
- EOF
+EOF
 
     sed -i "s|session    required     pam_env.so user_readenv=1 envfile=/etc/default/locale|session    required     pam_env.so envfile=/etc/default/locale|g" /etc/pam.d/sshd
     systemctl restart sshd
@@ -323,7 +323,7 @@ function inst_php82() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
     cat >>/etc/php/8.2/cgi/php.ini <<'EOF'
 
@@ -343,7 +343,7 @@ function inst_php82() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
     cat >>/etc/php/8.2/cli/php.ini <<'EOF'
 
@@ -363,7 +363,7 @@ function inst_php82() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
 }
 
@@ -391,7 +391,7 @@ function inst_php83() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
     cat >>/etc/php/8.3/cli/php.ini <<'EOF'
 
@@ -411,7 +411,7 @@ function inst_php83() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
     cat >>/etc/php/8.3/fpm/php.ini <<'EOF'
 
@@ -431,7 +431,7 @@ function inst_php83() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
 }
 
@@ -459,7 +459,7 @@ function inst_php84() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
     cat >>/etc/php/8.4/cli/php.ini <<'EOF'
 
@@ -479,7 +479,7 @@ function inst_php84() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
     cat >>/etc/php/8.4/fpm/php.ini <<'EOF'
 
@@ -499,7 +499,7 @@ function inst_php84() {
 	opcache.enable_cli=1
 	opcache.jit_buffer_size=256M
 
-	EOF
+EOF
 
 }
 
@@ -527,7 +527,7 @@ function inst_php85() {
  opcache.enable_cli=1
  opcache.jit_buffer_size=256M
 
- EOF
+EOF
 
     cat >>/etc/php/8.5/cli/php.ini <<'EOF'
 
@@ -547,7 +547,7 @@ function inst_php85() {
  opcache.enable_cli=1
  opcache.jit_buffer_size=256M
 
- EOF
+EOF
 
     cat >>/etc/php/8.5/fpm/php.ini <<'EOF'
 
@@ -567,7 +567,7 @@ function inst_php85() {
  opcache.enable_cli=1
  opcache.jit_buffer_size=256M
 
- EOF
+EOF
 
 }
 
@@ -610,7 +610,7 @@ function inst_redis() {
 
  vm.overcommit_memory = 1
 
- EOF
+EOF
 
 }
 
@@ -747,7 +747,7 @@ function inst_f2b() {
  [Definition]
  allowipv6 = auto
 
- EOF
+EOF
 
     #cp -av /usr/local/bin/fail2ban-* /usr/bin/
     #rm /usr/local/bin/fail2ban-*
@@ -838,7 +838,7 @@ function inst_logo_styles() {
 
  reboot
 
- EOF
+EOF
 
     chmod +x /root/inst_logo_styles.sh
 
@@ -944,7 +944,7 @@ function inst_bip() {
  echo -e "${GREEN}      IP Addr || subnet blocked permanently${NC}"
  echo -e ""
 
- EOF
+EOF
 
     chmod +x /usr/local/bin/bip
 
@@ -969,7 +969,7 @@ function inst_mariadb() {
  Components: main
  Signed-By: /usr/share/keyrings/mariadb-keyring.gpg
 
- EOF
+EOF
 
     sed -i 's/\[mariadb-11.8\]/\[mariadb-11.8\]\n\nfeedback=off/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     systemctl restart mariadb
