@@ -671,9 +671,7 @@ function post_inst() {
     cp .bash_aliases /etc/skel/.bash_aliases
 
     ### additional aliases currently only for root
-    wget -O .bash_aliasext 
-
-
+    wget -O .bash_aliasext https://raw.githubusercontent.com/fdmgit/Install-Debian-13/refs/heads/main/bash_aliasextend
     
     rm -R .spamassassin
     rm inst_deb13_amd64.sh
