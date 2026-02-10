@@ -669,6 +669,12 @@ function post_inst() {
         echo "fi"
     } >>.bash_aliases
     cp .bash_aliases /etc/skel/.bash_aliases
+
+    ### additional aliases currently only for root
+    wget -O .bash_aliasext 
+
+
+    
     rm -R .spamassassin
     rm inst_deb13_amd64.sh
 
