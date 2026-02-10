@@ -882,7 +882,7 @@ function inst_geoip() {
     
     geoip-shell restore
 
-    geoip-shell configure -B "/etc/geoip-Shell/install/local_block_ipv4.net
+    geoip-shell configure -B "/etc/geoip-shell/install/local_block_ipv4.net"
     
     # Setup cron jobs
 
