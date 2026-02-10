@@ -663,6 +663,10 @@ function post_inst() {
         echo "alias iplookup='net-ip-lookup'"
         echo "alias check-vhosts='apache-check-vhosts'"
         echo "alias {loc,locate}='plocate'"
+        echo ""
+        echo "if [ -f ~/.bash_aliasext ]; then"
+        echo "    . ~/.bash_aliasext"
+        echo "fi"
     } >>.bash_aliases
     cp .bash_aliases /etc/skel/.bash_aliases
     rm -R .spamassassin
