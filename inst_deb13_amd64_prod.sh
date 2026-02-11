@@ -216,10 +216,33 @@ function inst_mc() {
     #################################
     #### Install Midnight Commander
     #################################
-
+    
     apt update
     apt install mc -y
 
+}
+
+function inst_nano {
+
+    #################################
+    #### Install newest nano version
+    #################################
+
+    cd /root || exit
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/nano_8.7.1-1_amd64.deb
+    dpkg -i nano_8.7.1-1_amd64.deb
+    
+    ###################################
+    #### enable mouse support for nano
+    ###################################
+    sed -i "s|# set mouse|set mouse|g" /etc/nanorc
+
+    ###################################
+    #### enable linenumbers for nano
+    ###################################
+    sed -i "s|# set linenumbers|set linenumbers|g" /etc/nanorc
+
+    rm nano_8.7.1-1_amd64.deb
 }
 
 function inst_virtualmin() {
