@@ -1114,6 +1114,7 @@ inst_jos                 # function
 inst_hstr                # function
 inst_pwgen               # function
 inst_mc                  # function
+inst_nano                # function
 inst_virtualmin          # function
 inst_add_python          # function
 dis_services             # function
