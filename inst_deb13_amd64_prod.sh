@@ -38,8 +38,6 @@ function pre_inst_ssh() {
     cp bashrc.ini /etc/skel/.bashrc
     rm /root/bashrc.ini
 
-    #echo "deb http://deb.debian.org/debian/ bookworm-backports main" | tee -a /etc/apt/sources.list
-
     ###################################
     #### change file limit for root
     ###################################
@@ -136,8 +134,6 @@ function inst_base() {
     ###################################
     touch /var/log/auth.log
     touch /var/log/syslog
-
-
 }
 
 function inst_smart_nvme() {
@@ -166,7 +162,6 @@ function inst_gat() {
     rm gat_Linux_x86_64.tar.gz
     rm LICENSE
     rm README.md
-
 }
 
 function inst_jos() {
@@ -198,7 +193,6 @@ function inst_pwgen() {
     ###################################
 
     apt install pwgen -y
-
 }
 
 function inst_mc() {
@@ -209,7 +203,6 @@ function inst_mc() {
     
     apt update
     apt install mc -y
-
 }
 
 function inst_nano {
@@ -243,13 +236,7 @@ function inst_virtualmin() {
 
     apt install gpg-agent -y
 
-    cd /root || exit
-
-
-    ##### testing
-    #wget -O virtualmin-install.sh https://raw.githubusercontent.com/virtualmin/virtualmin-install/master/virtualmin-install.sh
-    #yes | sh virtualmin-install.sh --type mini  --branch prerelease #  < full | mini >
-    #yes | sh virtualmin-install.sh --type mini  --branch rc #  < full | mini >    
+    cd /root || exit  
     
     ##### production
     wget -O virtualmin-install.sh https://download.virtualmin.com/virtualmin-install.sh
@@ -261,7 +248,6 @@ function inst_virtualmin() {
     apt install fail2ban -y
     virtualmin-config-system -i=Fail2banFirewalld
     rm virtualmin-install.sh
-
 }
 
 function inst_add_python() {
@@ -275,7 +261,6 @@ function inst_add_python() {
     apt install python3-pip -y
     apt install virtualenv -y
     apt install python3-systemd -y
-
 }
 
 function dis_services() {
@@ -292,7 +277,6 @@ function dis_services() {
     #systemctl disable clamav-daemon
     #systemctl disable postgrey
     systemctl disable postfix
-
 }
 
 function inst_sury_repo() {
@@ -309,11 +293,9 @@ function inst_sury_repo() {
     
     apt update
     apt upgrade -y
-
 }
 
 function inst_php82() {
-
 
     apt-get install php8.2-{bcmath,bz2,cgi,curl,dba,fpm,gd,gmp,igbinary,imagick,imap,intl,ldap,mbstring} -y
     apt-get install php8.2-{mysql,odbc,opcache,pspell,readline,redis,soap,sqlite3,tidy,xml,xmlrpc,xsl,zip} -y
@@ -377,11 +359,9 @@ opcache.enable_cli=1
 opcache.jit_buffer_size=256M
 
 EOF
-
 }
 
 function inst_php83() {
-
 
     apt-get install php8.3-{bcmath,bz2,cgi,curl,dba,fpm,gd,gmp,igbinary,imagick,imap,intl,ldap,mbstring} -y
     apt-get install php8.3-{mysql,odbc,opcache,pspell,readline,redis,soap,sqlite3,tidy,xml,xmlrpc,xsl,zip} -y
@@ -445,11 +425,9 @@ opcache.enable_cli=1
 opcache.jit_buffer_size=256M
 
 EOF
-
 }
 
 function inst_php84() {
-
 
     apt-get install php8.4-{bcmath,bz2,cgi,curl,dba,fpm,gd,gmp,igbinary,imagick,imap,intl,ldap,mbstring} -y
     apt-get install php8.4-{mysql,odbc,opcache,pspell,readline,redis,soap,sqlite3,tidy,xml,xmlrpc,xsl,zip} -y
@@ -513,11 +491,9 @@ opcache.enable_cli=1
 opcache.jit_buffer_size=256M
 
 EOF
-
 }
 
 function inst_php85() {
-
 
     apt-get install php8.5-{bcmath,bz2,cgi,curl,dba,fpm,gd,gmp,igbinary,imagick,imap,intl,ldap,mbstring} -y
     apt-get install php8.5-{mysql,odbc,pspell,readline,redis,soap,sqlite3,tidy,xml,xmlrpc,xsl,zip} -y
@@ -581,7 +557,6 @@ opcache.enable_cli=1
 opcache.jit_buffer_size=256M
 
 EOF
-
 }
 
 function enable_apache_modules() {
@@ -595,7 +570,6 @@ function enable_apache_modules() {
     a2enmod expires
     a2enmod include
     a2enmod proxy_http2
-
 }
 
 function inst_wsgi_apache_module() {
@@ -605,7 +579,6 @@ function inst_wsgi_apache_module() {
     #####################################
 
     apt install libapache2-mod-wsgi-py3 -y
-
 }
 
 function inst_redis() {
@@ -624,7 +597,6 @@ function inst_redis() {
 vm.overcommit_memory = 1
 
 EOF
-
 }
 
 function inst_virtualmin_config() {
@@ -639,7 +611,6 @@ function inst_virtualmin_config() {
     wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/server-level.tar.gz
     tar -xvzf server-level.tar.gz
     rm server-level.tar.gz
-
 }
 
 function inst_iliascripts() {
@@ -655,7 +626,6 @@ function inst_iliascripts() {
     chmod +x apache-log-stats
     chmod +x net-ip-lookup
     chmod +x apache-check-vhosts    
-
 }
 
 function post_inst() {
@@ -700,7 +670,6 @@ function post_inst() {
     apt update
     apt upgrade -y
     updatedb
-
 }
 
 function inst_motd() {
@@ -742,7 +711,6 @@ function inst_composer() {
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     php composer-setup.php --install-dir=/usr/local/bin/ --filename=composer --quiet
     php -r "unlink('composer-setup.php');"
-
 }
 
 function inst_f2b() {
@@ -774,7 +742,6 @@ EOF
 
     #cp -av /usr/local/bin/fail2ban-* /usr/bin/
     #rm /usr/local/bin/fail2ban-*
-
 }
 
 function inst_logo_styles() {
@@ -864,11 +831,14 @@ reboot
 EOF
 
     chmod +x /root/inst_logo_styles.sh
-
 }
 
 function inst_geoip() {
 
+    ###########################################
+    ### install versatile geoblocker for Linux
+    ###########################################
+    
     mkdir /root/geoip 
     cd /root/geoip || exit
     # get geoip-shell source; newest release
@@ -970,7 +940,6 @@ echo -e ""
 EOF
 
     chmod +x /usr/local/bin/bip
-
 }
 
 function inst_mariadb() {
@@ -1011,7 +980,6 @@ EOF
     #ls provider*.cnf | xargs -I{} mv {} {}.orig
     find provider*.cnf -print0 | xargs -0 -I{} mv {} {}.orig
     apt autoremove -y
-
 }
 
 function closing_msg() {
