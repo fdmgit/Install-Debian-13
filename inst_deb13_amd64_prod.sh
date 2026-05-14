@@ -212,8 +212,8 @@ function inst_nano {
     #################################
 
     cd /root || exit
-    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/nano_8.7.1-1_amd64.deb
-    yes | dpkg -i nano_8.7.1-1_amd64.deb
+    wget https://raw.githubusercontent.com/fdmgit/Install-Debian-13/main/nano_9.0-1_amd64.deb
+    yes | dpkg -i nano_9.0-1_amd64.deb
     
     ###################################
     #### enable mouse support for nano
@@ -225,7 +225,7 @@ function inst_nano {
     ###################################
     sed -i "s|# set linenumbers|set linenumbers|g" /etc/nanorc
 
-    rm nano_8.7.1-1_amd64.deb
+    rm nano_9.0-1_amd64.deb
 }
 
 function inst_virtualmin() {
